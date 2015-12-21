@@ -1,0 +1,79 @@
+
+body {text-align:center ;}
+#msg-header {
+    color: #000000;
+    font-size: 10px;
+    font-family: arial;
+    text-align: left;
+    padding-left: 10px;
+    text-transform: uppercase;
+    color: #fff;
+}
+#msg-text   {
+    color:white;
+    font-family: arial;
+    z-index: 1;
+
+}
+#msg a{
+    margin: 0px;
+    text-transform: lowercase;
+    color: #fff;
+}
+
+#msg a:hover{
+
+    text-decoration: none;
+
+}
+#msg p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.secret {
+    display: block;
+    font-size: 10px;
+    color: #000;
+    text-transform: lowercase;
+    font-style: italic;
+    height: 25px;
+    text-align: left;
+    margin-left: 25px;
+
+}
+.secret:hover{
+    color: #fff;
+
+}
+.logo{
+    font-weight: 100;
+    margin: 0px !important;
+    font-size: 60px;
+    font-style: italic;
+    opacity: 0.4;
+}
+
+.logo:hover{
+    color: #e9e9e9;
+    text-shadow: 00px 0px 10px #000;
+    opacity: 1;
+}
+#msg {
+    margin: 0 auto;
+    width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: -webkit-linear-gradient(top, #d1a679 0%,#c2905c 100%);
+    /*height: 465px;*/
+}
+#msg img{
+    border-radius: 50%;
+    -webkit-transition: -webkit-transform .8s ease-in-out;
+    transition: transform .8s ease-in-out;
+}
+
+#msg img:hover{
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+

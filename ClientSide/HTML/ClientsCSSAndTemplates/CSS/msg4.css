@@ -1,0 +1,84 @@
+body {text-align:center ;}
+#msg-header {
+    color: #000000;
+    font-size: 10px;
+    font-family: arial;
+    text-align: left;
+    padding-left: 10px;
+    text-transform: uppercase;
+    color: #fff;
+}
+#msg-text   {
+    color:white;
+    font-family: arial;
+    z-index: 1;
+
+}
+#msg a{
+    margin: 0px;
+    text-transform: lowercase;
+    color: #fff;
+}
+
+#msg a:hover{
+
+    text-decoration: none;
+
+}
+#msg p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.secret {
+    display: block;
+    font-size: 10px;
+    color: #000;
+    text-transform: lowercase;
+    font-style: italic;
+    height: 25px;
+    text-align: left;
+    margin-left: 25px;
+
+}
+.secret:hover{
+    color: #fff;
+}
+.logo{
+    font-weight: 100;
+    margin: 0px !important;
+    font-size: 60px;
+    font-style: italic;
+}
+
+.logo:hover{
+    color: #e9e9e9;
+    text-shadow: 00px 0px 10px #0000cc ;
+}
+#msg {
+    margin: 0 auto;
+    width: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: -webkit-linear-gradient(top, #1453d6 0%,#1453d6 100%);
+}
+
+#msg img {
+    height: 340px;
+    display: inline-block;
+    border-radius: 0px !important;
+    transition: 1s content linear;
+    margin-top: 0px;
+    z-index: -1;
+    margin-left: 0px;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+#msg img:hover{
+
+    display: inline-block;
+    margin-bottom: -100px;
+    margin-left: 0px;
+    margin-right: auto;
+    overflow: hidden;
+}

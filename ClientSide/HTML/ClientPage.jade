@@ -1,0 +1,24 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title Tester WP
+        script(src='TimeFrame.js')
+        script(src='message.js')
+        script(src='date.js')
+        script(src='appdriver.js')
+        script(src='http://code.jquery.com/jquery-1.11.3.min.js')
+        script.
+           var msgs=!{JSON.parse(JSON.stringify(msgs))};
+           var screenID=!{JSON.parse(JSON.stringify(screenID))};
+            $(document).ready(function ()
+            {
+                buildMsgsAndStartApp(msgs,0,screenID);
+            });
+    body
+        p#msg
+        h1#msg-header
+        span#msg-text
+            | .
+        span#msg-imgs
+        p

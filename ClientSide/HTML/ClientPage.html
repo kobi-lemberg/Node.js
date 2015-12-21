@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tester WP</title>
+    <script src="TimeFrame.js"></script>
+    <script src="message.js"></script>
+    <script src="appdriver.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script>
+        var msgs={};
+        "use strict";
+        $(document).ready(function ()
+        {
+            var screenID = (window.location.pathname).charAt(window.location.pathname.length-1);
+            $.get('http://127.0.0.1:8081/jsonscreen='+screenID, {
+                //jsonscreen:screenID ,
+                }, function (data)
+                {
+                    var dataAsObject = JSON.parse(data);
+                    //After we have all the msgs, lets start the app:
+                    buildMsgsAndStartApp(dataAsObject,0,window.location.pathname);
+                });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

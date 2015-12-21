@@ -1,0 +1,142 @@
+[
+  {
+    "screenArr":[1,8],
+    "name":"Pesek-Zman msg1",
+    "texts":
+      [
+        "קח פסק זמן",
+        "פסק זמן",
+        "אכילה אינה מומלצת לכלבים ונשים בהריון",
+        "שלח הודעה זו לחבר וקבל חבילת פסק זמן לאשתך"
+
+      ],
+    "imgs":
+      [
+        "http://wiki.lifelessgame.com/images/thumb/b/b2/Snackbar.png/225px-Snackbar.png"
+      ],
+    "templateURL":"Pesek-Zman",
+    "timeFrames":
+      [
+        {
+          "startDate":"1/1/2015",
+          "endDate":"12/30/2015",
+          "daysArr":[0,1,2,3,4,5,6,7],
+          "startTime":0,
+          "endTime":23.59
+        }
+      ],
+    "seconds":5
+  },
+  {
+    "screenArr":[2,8],
+    "name":"Kfar Saba msg2",
+    "texts":
+      [
+        "Did you try Kfar Saba?",
+        "You may be surprised. Go ahead. ",
+        "find a hotel in Kfar Saba",
+        "Kfar Saba",
+        "Always a vacation"
+      ],
+    "imgs":
+      [
+        "http://cdn.stylisheve.com/wp-content/uploads/2012/10/The-Best-Sunsets-from-a-Fancy-Vacation-Villa-Indonesia-1.jpg"
+      ],
+    "templateURL":"Kfar-Saba",
+    "timeFrames":
+      [
+        {
+          "startDate":"1/1/2015",
+          "endDate":"12/30/2015",
+          "daysArr":[0,1,2,3,4,5,6,7],
+          "startTime":0,"endTime":23.59}
+      ],
+    "seconds":5
+  },
+  {
+    "screenArr":[3,8],
+    "name":"Kfar Saba msg3",
+    "texts":
+      [
+        "Tired?",
+        "Enjoy a heavenly vacation at",
+        "Kfar Saba",
+        "Sure is better than going to Eilat again...",
+        "KfarSaba.co.il",
+        "Images may not reflect Kfar Saba.",
+        ""
+      ],
+    "imgs":
+      [
+        "http://h15.imgup.net/transparenef3b.png"
+      ],
+    "templateURL":"Kfar-Saba2",
+    "timeFrames":
+      [
+        {
+          "startDate":"1/1/2015",
+          "endDate":"12/30/2015",
+          "daysArr":[0,1,2,3,4,5,6,7],
+          "startTime":0,
+          "endTime":23.59
+        }
+      ],
+    "seconds":5
+  },
+  {
+    "screenArr":[4,8],
+    "name":"msg4",
+    "texts":
+      [
+        "Message4 - text field 1",
+        "Message4 - text field 2"
+      ],
+    "imgs":
+      [
+        ""
+      ],
+    "templateURL":"Kfar-Saba2",
+    "timeFrames":
+      [
+        {
+          "startDate":"1/1/2015",
+          "endDate":"12/30/2015",
+          "daysArr":[0,1,2,3,4,5,6,7],
+          "startTime":0,
+          "endTime":23.59
+        }
+      ],
+    "seconds":5
+  },
+  {
+    "screenArr":[5,8],
+    "name":"Coca-Cola msg5",
+    "texts":
+      [
+        "Thirsty?",
+        "Let me pour you some more",
+        "Coca-Cola",
+        "Enjoy life, Enjoy Coca-Cola",
+        "Visit us at CocaCola.com",
+        "Enjoy life, drink Cola. ",
+        "did you try the new Coke Zero?</span>"
+      ],
+    "imgs":
+      [
+        "http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png",
+        "http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png"
+      ],
+    "templateURL":"Coca-Cola",
+    "timeFrames":
+      [
+        {
+          "startDate":"1/1/2015",
+          "endDate":"12/30/2015",
+          "daysArr":[0,1,2,3,4,5,6,7],
+          "startTime":0,
+          "endTime":23.59
+        }
+      ],
+    "seconds":5
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "name": "task2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Server.js",
+  "scripts": {
+	"prestart": "mongod --dbpath C:\db\mongodb\data --fork --logpath C:\db\mongodb\data\log.txt",
+    "test": "consol.log",
+    "start": "node server.js"
+	"poststop": "mongo admin --eval 'db.shutdownServer()' > C:\db\mongodb\data\log.txt",
+	"pretest": "mongod --dbpath C:\db\mongodb\data --fork --logpath C:\db\mongodb\data\log.txt",
+	"test": "mocha test",
+	"posttest": "mongo admin --eval 'db.shutdownServer()' > C:\db\mongodb\data\log.txt"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "fs": "0.0.2",
+    "jade": "^1.11.0",
+    "node-import": "^0.9.2",
+    "path": "^0.12.7"
+  },
+
+  
+}
