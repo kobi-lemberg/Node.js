@@ -17,6 +17,10 @@ var MongoClient = mongodb.MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/'+DBName;
 var driver = express();
+var cors = require('cors');
+
+// use it before all route definitions
+driver.use(cors({origin: 'http://localhost:8081'}));
 var clientPath = path.resolve('ClientSide/HTML');
 var clientSidePath = path.resolve('ClientSide');
 driver.use(express.static(clientSidePath));
@@ -31,10 +35,24 @@ mongodb.connect(url, function(err, db)
     else {
         console.log('Successfully connected to the database');
     }
+
+
+
+
+
+
+
+
     driver.get('/screen=:screenID', function (req, res) {
+
+
+
         res.sendFile(path.resolve("ClientSide/HTML/ClientPage.html"));
     })
     driver.get('/jsonscreen=:screenID', function (req, res) {
+
+
+
         var contentCollection = db.collection(myCollection);
         var screenIDAsInt = (req.params.screenID)*1;
         var now = new Date();
@@ -60,3 +78,20 @@ mongodb.connect(url, function(err, db)
         console.log("App is currently listening at http://%s:%s", host, port);
     })
 });
+
+
+var addHeaders = function(res)
+{
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+}
