@@ -2,6 +2,8 @@
  * Created by Kobi on 14/11/2015.
  */
 "use strict";
+var timeOut;
+var firstTimeDisplayFlag=false;
 var displayOneMsg = function(msgArr,index,screenID)
 {
     //Flow: Check if we have msgs -> get the msg html template file -> for each text in msgs append it to body ->
@@ -11,7 +13,7 @@ var displayOneMsg = function(msgArr,index,screenID)
         for (var tfIndex=0; tfIndex<msgArr[index].timeFrames.length;  tfIndex++) {
             if ((msgArr[index]).timeFrames[tfIndex].display())
             {
-                $.get('http://127.0.0.1:8081/'+"ClientsCSSAndTemplates/"+(msgArr[index]).getTemplateURL()+".html", {}, function (data) {
+                $.get('http://127.0.0.1:8080/'+"ClientsCSSAndTemplates/"+(msgArr[index]).getTemplateURL()+".html", {}, function (data) {
                     $("body").html(data).fadeOut(1).fadeIn(1000);
                     var text = "";
                     var img="";
@@ -43,7 +45,8 @@ var displayOneMsg = function(msgArr,index,screenID)
                     }*/
                     //New code:
                     index = (index+1)%msgArr.length;
-                    setTimeout(function() {displayOneMsg(msgArr,index);},(msgArr[index]).seconds*1000);
+                    console.log("msgArr.length(): "+msgArr.length);
+                    var timeOut =setTimeout(function() {displayOneMsg(msgArr,index);},(msgArr[index]).seconds*1000);
 
                 });
             }
@@ -70,7 +73,7 @@ var loadCSS = function(href) {
  * href represent the css file name without extension!!
  */
 var loadHTML = function(href) {
-    $.get('http://127.0.0.1:8081/'+href, {
+    $.get('http://127.0.0.1:8080/'+href, {
     }, function (data)
     {
         $("body").append(data);
@@ -108,7 +111,18 @@ var buildMsgsAndStartApp = function(dataAsObject,index,screenID)
         finalMsgsToDisplay[i] = new Message(screenArr, name, texts, imgs, templateURL, timfs, seconds);
     }
     //After we have all the msgs, lets start the app:
-    displayOneMsg(finalMsgsToDisplay,0,screenID);
+    if(!firstTimeDisplayFlag)
+    {
+        firstTimeDisplayFlag=true;
+        displayOneMsg(finalMsgsToDisplay,0,screenID);
+    }
+    else
+    {
+        console.log("Update!");
+        clearTimeout(timeOut);
+        displayOneMsg(finalMsgsToDisplay,0,screenID);
+    }
+
 }
 
 

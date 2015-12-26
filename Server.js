@@ -7,6 +7,7 @@
  */
 require('node-import');
 var express = require('express');
+var http = require('http');
 var path = require('path');
 var fs = require('fs');
 var myCollection  = 'msgs';
@@ -17,14 +18,41 @@ var MongoClient = mongodb.MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost:27017/'+DBName;
 var driver = express();
+var server = http.createServer(driver);
+var io = require('socket.io').listen(server);
+
+
+
+
 var cors = require('cors');
 
 // use it before all route definitions
-driver.use(cors({origin: 'http://localhost:8081'}));
+driver.use(cors({origin: 'http://localhost:8080'}));
 var clientPath = path.resolve('ClientSide/HTML');
 var clientSidePath = path.resolve('ClientSide');
 driver.use(express.static(clientSidePath));
 driver.use(express.static(clientPath));
+var socketClientsArr=[];
+
+var jsonToUpdate= {
+    "screenArr":[4],
+    "name":"Coca-Cola update",
+    "texts":
+        [
+            "Still Thirsty updated!!!?",
+            "Coca-Cola",
+            "Enjoy life, Enjoy Coca-Cola",
+            "Visit us at CocaCola.com",
+            "Enjoy life, drink Cola. ",
+            "did you try the new Coke Zero?"
+        ],
+    "imgs":["http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png"],
+    "templateURL":"Coca-Cola",
+    "timeFrames":[{"startDate":"01/01/2015","endDate":"12/30/2015","daysArr":[0,1,2,3,4,5,6,7],"startTime":0,"endTime":23.59}],
+    "seconds":5
+};
+
+
 
 
 mongodb.connect(url, function(err, db)
@@ -35,43 +63,86 @@ mongodb.connect(url, function(err, db)
     else {
         console.log('Successfully connected to the database');
     }
-
-
-
-
-
-
-
-
     driver.get('/screen=:screenID', function (req, res) {
-
-
-
         res.sendFile(path.resolve("ClientSide/HTML/ClientPage.html"));
     })
-    driver.get('/jsonscreen=:screenID', function (req, res) {
 
-
-
+    driver.get('/TestUpdate/:id', function (req, res) {
         var contentCollection = db.collection(myCollection);
-        var screenIDAsInt = (req.params.screenID)*1;
-        var now = new Date();
-        var time = (now.getMinutes() * 0.01)+ now.getHours(); //current time in the following format: HH.MM
-        var parsedNow = Date.parse(now).toString(); //Current date as int, represent the the number of milliseconds since January 1, 1970, 00:00:00 UTC or NaN if the string is unrecognised or contains illegal date values (e.g. 2015-02-31).
-        contentCollection.find(
-            //screenID in screenArr && startDate <= parsedNow && parsedNow <= endDate && startTime <= time && time <= endTime
-            //{screenArr: screenIDAsInt,'timeFrames.startDate':{$lte:parsedNow},"timeFrames.endDate":{$gte:parsedNow},'timeFrames.startTime':{$lte:time},"timeFrames.endTime":{$gte:time}}
-            {screenArr: screenIDAsInt}
-        ).toArray(function(err, result)
+        contentCollection.insert(jsonToUpdate,function(err)
         {
-            if (err) {
-                throw err;
-            } else {
-                res.send(JSON.stringify(result));
+            if (err) res.send(err);
+            else
+            {
+                for(var i=0;i<socketClientsArr.length;i++)
+                {
+
+                    if(socketClientsArr[i].screenID==req.params.id)
+                    {
+                        var contentCollection = db.collection(myCollection);
+                        var screenIDAsInt = (req.params.id)*1;
+                        var clientID = socketClientsArr[i].clientID;
+                        contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
+                        {
+                            if (err) throw err;
+                            else
+                            {
+                                console.log("clientID as param: "+clientID);
+                                io.sockets.connected[clientID].emit("pushJsonToClient",JSON.stringify(result));
+                            }
+                        });
+                    }
+                }
             }
+            console.log("connected clients:    "+JSON.stringify(socketClientsArr));
         });
+        console.log(req.params.id);
     })
-    var server = driver.listen(8081, function ()
+
+    io.sockets.on("connection",function(client){
+       client.on("getJsonFromServer",function(data){
+          console.log("client:  "+client+"\ndata:  "+data+"   client id: "+client.id);
+           socketClientsArr.push({
+               "clientID":client.id,
+               "screenID":data
+           });
+           var contentCollection = db.collection(myCollection);
+           var screenIDAsInt = (data)*1;
+           contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
+           {
+               if (err) throw err;
+               else client.emit("pushJsonToClient",JSON.stringify(result));
+           });
+
+       });
+
+
+        client.on('disconnect', function (client) {
+            console.log("Client Array size is: "+socketClientsArr.length);
+            console.log("client:  "+client+ "client.id:  "+client.id);
+            for(var i=0;i<socketClientsArr.length;i++)
+            {
+                if(socketClientsArr[i].clientID == client.id)
+                {
+
+                    socketClientsArr.splice(i,1);
+                    i--;
+
+                    console.log("Client removed!");
+                    console.log("Client Array size is: "+socketClientsArr.length);
+                }
+            }
+
+
+        });
+
+
+
+    });
+
+
+
+    server.listen(8080, function ()
     {
         var host = ("127.0.0.1");
         var port = server.address().port;
@@ -83,7 +154,7 @@ mongodb.connect(url, function(err, db)
 var addHeaders = function(res)
 {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
