@@ -20,10 +20,6 @@ var url = 'mongodb://localhost:27017/'+DBName;
 var driver = express();
 var server = http.createServer(driver);
 var io = require('socket.io').listen(server);
-
-
-
-
 var cors = require('cors');
 
 // use it before all route definitions
@@ -67,7 +63,7 @@ mongodb.connect(url, function(err, db)
         res.sendFile(path.resolve("ClientSide/HTML/ClientPage.html"));
     })
 
-    driver.get('/TestUpdate/:id', function (req, res) {
+    driver.get('/TestUpdate', function (req, res) {
         var contentCollection = db.collection(myCollection);
         contentCollection.insert(jsonToUpdate,function(err)
         {
@@ -77,10 +73,10 @@ mongodb.connect(url, function(err, db)
                 for(var i=0;i<socketClientsArr.length;i++)
                 {
 
-                    if(socketClientsArr[i].screenID==req.params.id)
+                    if(socketClientsArr[i].screenID==(req.query.id))
                     {
                         var contentCollection = db.collection(myCollection);
-                        var screenIDAsInt = (req.params.id)*1;
+                        var screenIDAsInt = (req.query.id)*1;
                         var clientID = socketClientsArr[i].clientID;
                         contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
                         {
@@ -88,7 +84,7 @@ mongodb.connect(url, function(err, db)
                             else
                             {
                                 console.log("clientID as param: "+clientID);
-                                io.sockets.connected[clientID].emit("pushJsonToClient",JSON.stringify(result));
+                                io.sockets.connected[clientID].emit("pushUpdatesJsonToClient",JSON.stringify(result));
                             }
                         });
                     }
@@ -117,7 +113,26 @@ mongodb.connect(url, function(err, db)
        });
 
 
-        client.on('disconnect', function (client) {
+        /* Update the client  */
+        client.on("pushUpdatesJsonToClient",function(data){
+            console.log("client:  "+client+"\ndata:  "+data+"   client id: "+client.id);
+            socketClientsArr.push({
+                "clientID":client.id,
+                "screenID":data
+            });
+            var contentCollection = db.collection(myCollection);
+            var screenIDAsInt = (data)*1;
+            contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
+            {
+                if (err) throw err;
+                else client.emit("pushJsonToClient",JSON.stringify(result));
+            });
+
+        });
+
+
+
+        client.on('disconnect', function () {
             console.log("Client Array size is: "+socketClientsArr.length);
             console.log("client:  "+client+ "client.id:  "+client.id);
             for(var i=0;i<socketClientsArr.length;i++)

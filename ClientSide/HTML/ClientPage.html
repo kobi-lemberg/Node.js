@@ -20,7 +20,15 @@
 
                 var dataAsObject = JSON.parse(data);
                 //After we have all the msgs, lets start the app:
-                setTimeout(function() { buildMsgsAndStartApp(dataAsObject,0,window.location.pathname);},0);
+                buildMsgsAndStartApp(dataAsObject,0,window.location.pathname,true);
+
+            });
+
+            server.on("pushUpdatesJsonToClient",function(data){
+
+                var dataAsObject = JSON.parse(data);
+                //After we have all the msgs, lets start the app:
+                buildMsgsAndStartApp(dataAsObject,0,window.location.pathname,false);
 
             });
 

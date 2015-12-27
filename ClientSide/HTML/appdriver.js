@@ -2,9 +2,13 @@
  * Created by Kobi on 14/11/2015.
  */
 "use strict";
-var timeOut;
-var firstTimeDisplayFlag=false;
-var displayOneMsg = function(msgArr,index,screenID)
+
+
+
+var msgArr=[];
+var index=0;
+
+var displayOneMsg = function(screenID)
 {
     //Flow: Check if we have msgs -> get the msg html template file -> for each text in msgs append it to body ->
     // for each img in msgs append it to body -> load msg css file -> if index < length of msgs go to next msg, else connect to the server again.
@@ -44,9 +48,15 @@ var displayOneMsg = function(msgArr,index,screenID)
                         setTimeout(function() {connectToServerAsScreen(screenID);},(msgArr[index]).seconds*1000);
                     }*/
                     //New code:
-                    index = (index+1)%msgArr.length;
+                    //index = (index+1)%msgArr.length;
                     console.log("msgArr.length(): "+msgArr.length);
-                    var timeOut =setTimeout(function() {displayOneMsg(msgArr,index);},(msgArr[index]).seconds*1000);
+                    console.log("Old index: "+index);
+                    console.log("Round is:"+(index+1)%msgArr.length)
+                    index = (index+1)%msgArr.length;
+                    console.log("New index: "+index);
+                    var timeOut =setTimeout(function() {
+                        displayOneMsg(msgArr,index);
+                    },(msgArr[index]).seconds*1000);
 
                 });
             }
@@ -88,7 +98,7 @@ var loadHTML = function(href) {
  * @param index represent the first msg to display
  * @param screenID represent the id of the client screen.
  */
-var buildMsgsAndStartApp = function(dataAsObject,index,screenID)
+var buildMsgsAndStartApp = function(dataAsObject,index,screenID,onFirstTime)
 {//Parsing the object and build an array of msgs/advertisement to display
     var finalMsgsToDisplay = [];
     for (var i = 0; i < dataAsObject.length; i++) {
@@ -111,7 +121,7 @@ var buildMsgsAndStartApp = function(dataAsObject,index,screenID)
         finalMsgsToDisplay[i] = new Message(screenArr, name, texts, imgs, templateURL, timfs, seconds);
     }
     //After we have all the msgs, lets start the app:
-    if(!firstTimeDisplayFlag)
+/*    if(!firstTimeDisplayFlag)
     {
         firstTimeDisplayFlag=true;
         displayOneMsg(finalMsgsToDisplay,0,screenID);
@@ -121,8 +131,13 @@ var buildMsgsAndStartApp = function(dataAsObject,index,screenID)
         console.log("Update!");
         clearTimeout(timeOut);
         displayOneMsg(finalMsgsToDisplay,0,screenID);
+    }*/
+    msgArr = finalMsgsToDisplay;
+    if(onFirstTime)
+    {
+        console.log("First time!");
+        displayOneMsg(screenID);
     }
-
 }
 
 
