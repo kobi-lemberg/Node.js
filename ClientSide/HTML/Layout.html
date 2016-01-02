@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- תרגיל 2 - מאת אלון עבאדי 201448057 וקובי למברג 201338217 -->
+
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=yes">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive screens - Admin panel</title>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel='stylesheet' type='text/css' href="http://localhost:8080/css=bootstrap.css">
+    <link rel='stylesheet' type='text/css' href="http://localhost:8080/css=bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href="http://localhost:8080/css=Style.css">"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://localhost:8080/script=bootstrap.js"></script>
+    <script src="http://localhost:8080/script=bootstrap.min.js"></script>
+    <script src="http://localhost:8080/script=d3pie.min.js"></script>
+
+    <!-- bxSlider Javascript file -->
+    <script src="/js/jquery.bxslider.min.js"></script>
+    <!-- bxSlider CSS file -->
+    <link href="/lib/jquery.bxslider.css" rel="stylesheet" />
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
+    <script>
+        function updateAbout() {
+            var id = $("#LatestQuestionID").val();
+            console.log(id);
+            $.get("http://localhost:8080/About" , {}, function (data, status) {
+                $("#mainContent").html(data).fadeOut(1).fadeIn(700);
+            });
+        };
+    </script>
+
+</head>
+<body>
+
+<nav>
+    <!-- Navigation -->
+    <ul>
+
+        <li><a href="javascript:updateAbout();">Screens</a></li>
+        <li><a href="http://localhost:8080/About">Messages</a></li>
+
+        <li><a href="http://localhost:8080/About">Price List</a></li>
+        <li><a href="http://localhost:8080/About">Customers</a></li>
+
+        <li class="subscribe">
+            <div id="transDemo2">
+                <a href="/Fans/Analytics" class="rsstext">Analytics<div class="hover"><img src="http://onecloudnetworks.com/wp-content/uploads/2015/01/operational-analytics-icon-sky.png" width="25" height="25"></div></a>
+            </div>
+        </li>
+
+        <li><a href="javascript:updateAbout();">About us</a></li>
+
+    </ul>
+</nav>
+<section id="intro">
+    <!-- Introduction -->
+
+    <script>
+        $(document).ready(function () {
+            $("#PostQuestionForm").submit(function (event) {
+                event.preventDefault();
+
+                var $form = $(this),
+                        Text = $form.find("textarea").val(),
+                        url = "/Questions/CreateNewQuestion";
+
+                $("textarea").val(" ");
+                $("textarea").focus();
+
+                //console.log("Submitting Text: " + Text);
+
+                var posting = $.post(url, { "Text": Text });
+
+                posting.done(function (data) {
+                    //  console.log(data);
+                })
+            });
+        });
+
+
+    </script>
+    <header>
+        <a onclick="$('#intro').fadeOut(50); $('#content').attr('style', 'margin:30px 0 0 0;'); $('#submitQuestionButton').fadeIn(500);"><img src="https://cdn1.iconfinder.com/data/icons/nuove/128x128/actions/fileclose.png" alt="close" style="width: 35px; height: 35px;" /></a>
+        <h2>Interactive screens</h2>
+        <div id="AskMe">
+            <form id="PostQuestionForm" method="POST">
+                <textarea name="Text" placeholder="Ask me anything!"></textarea>
+                <button id="submitQuestion" class="btn">Submit Question</button>
+            </form>
+        </div>
+
+    </header>
+    <p>Interactive screens Admin panel<br/>This page allow you to manage your application</p>
+
+
+
+</section>
+
+<div id="content">
+    <div id="mainContent">
+        <h3>Examples</h3>
+        <ul class="bxslider">
+            <li> h</li>
+            <li><img src="/images/pic2.jpg" /></li>
+            <li><img src="/images/pic3.jpg" /></li>
+            <li><img src="/images/pic4.jpg" /></li>
+        </ul>
+
+    </div>
+    <aside>
+        <script>
+            function upvote() {
+                var id = $("#LatestQuestionID").val();
+                console.log(id);
+                $.get('/Questions/Upvote?ID=' + id , {}, function (data, status) {
+                    updateQuestion();
+                })
+            };
+
+            function updateQuestion() {
+                $.get('/Questions/GetLatestQuestion', {}, function (data, status) {
+                    // console.log(data);
+                    var prefix = "<strong>Question: </strong>";
+                    $('#latestQuestion').html(prefix + data.Text);
+                    $('#Votes').html(""+data.Votes+"");
+                    $('#LatestQuestionID').attr('value', data.ID);
+                });
+            }
+        </script>
+
+        <section id="search">
+            <h3>Search Message</h3>
+            <form action="/Blog/Search" method="get">
+                <span class="input_title">From Date</span>
+                <input type="date" name="datefrom" /> <br /><span class="input_title">Until Date</span>
+                <input type="date" name="dateto" /> <br />
+
+                <span class="input_title">Client</span>
+                <input name="author" type="search" placeholder="Client" />
+
+                <br />
+                <span class="input_title">Texts</span>
+
+                <input type="search" name="title" placeholder="Texts"><br />
+                <br />
+
+                <h3>Number of advertisment per screen</h3>
+                <span class="input_title">Screen</span>
+                <input type="number" name="commentswords" placeholder="Screen ID" />
+
+                <br />
+                <span class="input_title">Number of advertisment</span>
+                <input type="range" name="comments" min="0" max="10" value="0" />
+
+
+                <input type="submit" class="btn btn-primary" value="Submit Search Query" />
+            </form>
+
+        </section>
+
+
+
+
+        <script>
+
+            $(document).ready(function () {
+                console.log("ready!");
+
+            });
+
+            function FindShop() {
+                var geocoder = new google.maps.Geocoder();
+                var myAddress = $('#myAddress').val();
+
+                geocoder.geocode({ 'address': myAddress }, function (results, status) {
+                    // console.log(results);
+
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var myX = results[0].geometry.location.lat();
+                        var myY = results[0].geometry.location.lng();
+                    }
+
+                    $.get('/Shop/GetShops', {}, function (data, status) {
+                        var bestShop = "No Shop";
+                        var bestDistance = 11000;
+                        $(data).each(function (i,shop) {
+                            geocoder.geocode({ 'address': shop.Address }, function (results, status) {
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                    var latitude = results[0].geometry.location.lat();
+                                    var longitude = results[0].geometry.location.lng();
+                                    var distance = Math.abs(latitude - myX) + Math.abs(longitude - myY);
+
+                                    if (distance < bestDistance) {
+                                        bestDistance = distance;
+                                        bestShop = shop.Address;
+                                        $("#bestShop").html("The Best shop for you is: <br /><strong>" + bestShop + "</strong>");
+                                    }
+                                }
+                            });
+                        });
+                    })
+
+                })
+            }
+
+
+
+        </script>
+
+        <section id="locateShop">
+            <header>
+                <h3>Find Closest Screen</h3>
+            </header>
+            <span id="bestShop"><br /> Enter wanted location:</span>
+            <input type="search" id="myAddress" style="width: 252px; margin-bottom:10px; text-align: center;" />
+            <br />
+
+            <input type="submit" onclick="FindShop();" class="btn btn-primary" style="background-color: #428BCA; color: #fff;" value="Find Closest Screen" /> <a style="margin-left: 5px;"href="/Shop/">Go to Price List</a>
+
+        </section>
+
+    </aside>
+</div>
+<footer>
+    <!-- Footer -->
+    <div style="direction: ltr;">
+        <section id="about">
+            <header>
+                <h3>About</h3>
+            </header>
+            <p>This web application was built as part of "Advanced web application" course, semester A 2016, in The college of managment, created for the lecturer  <strong>Igor Rochlin.</strong></p>
+        </section>
+        <section id="blogroll">
+            <header>
+                <h3>Developers</h3>
+            </header>
+
+            <ul>
+                <li>Yaniv Stein - 305690067</li>
+                <li>Kobi Lemberg - 201338217</li>
+                <li>Arik Bidny - 314210675</li>
+                <li>Nir Konky - 313521072</li>
+
+            </ul>
+        </section>
+        <section id="popular">
+            <header>
+                <h3>Infrustructure</h3>
+            </header>
+            <ul>
+                <li>Node.js</li>
+                <li>MongoDB</li>
+                <li>AngularJS</li>
+                <li>HTML5</li>
+            </ul>
+
+
+        </section>
+
+    </div>
+</footer>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -26,8 +26,13 @@ var cors = require('cors');
 driver.use(cors({origin: 'http://localhost:8080'}));
 var clientPath = path.resolve('ClientSide/HTML');
 var clientSidePath = path.resolve('ClientSide');
+var contentPath = path.resolve('Content');
+
+driver.use(express.static(contentPath));
+
 driver.use(express.static(clientSidePath));
 driver.use(express.static(clientPath));
+
 var socketClientsArr=[];
 
 var jsonToUpdate= {
@@ -61,6 +66,31 @@ mongodb.connect(url, function(err, db)
     }
     driver.get('/screen=:screenID', function (req, res) {
         res.sendFile(path.resolve("ClientSide/HTML/ClientPage.html"));
+    })
+
+    driver.get('/css=:cssFile', function (req, res) {
+        res.sendFile(path.resolve("ClientSide/HTML/LayoutCSS/"+req.params.cssFile));
+    })
+
+
+    driver.get('/script=:scriptFile', function (req, res) {
+        res.sendFile(path.resolve("ClientSide/HTML/"+req.params.scriptFile));
+    })
+
+
+    driver.get('/About', function (req, res) {
+        addHeaders(res);
+        res.sendFile(path.resolve("ClientSide/HTML/AboutUs.html"));
+    })
+
+    driver.get('/Admin', function (req, res) {
+        addHeaders(res);
+        res.sendFile(path.resolve("ClientSide/HTML/Layout.html"));
+    })
+
+    driver.get('/Content/Images=:image', function (req, res) {
+        addHeaders(res);
+        res.sendFile(path.resolve("Content/Images/"+req.params.image));
     })
 
     driver.get('/TestUpdate', function (req, res) {

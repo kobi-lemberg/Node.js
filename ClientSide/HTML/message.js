@@ -17,7 +17,7 @@ var Message = function(screensArr,name,textsArr,imgsArr,templatesURL,timeFramesA
     }
     else
     {
-        console.log("The length of the text fields or images fields are incompatible");
+        console.log("The length of the text fields or Images fields are incompatible");
     }
 }
 
