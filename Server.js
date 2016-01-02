@@ -146,9 +146,9 @@ mongodb.connect(url, function(err, db)
         var contentCollection = db.collection(msgsCollection);
 
 
-        req.body.screenNumber     ? searchQuery.screenArr   = { $elemMatch : { $eq :(parseInt(req.body.screenNumber))} }   : 1==1;
-        req.body.texts            ? searchQuery.texts       = { $elemMatch : { $eq : req.body.texts                  } }   : 1==1;
-        req.body.startDate        ? searchQuery.timeFrames  = { '$elemMatch': { startDate : { '$eq': req.body.startDate } } }    : 1==1;
+        req.body.screenNumber     ? searchQuery.screenArr   = { $elemMatch :  { $eq :(parseInt(req.body.screenNumber))  } }     : 1==1;
+        req.body.texts            ? searchQuery.texts       = { $elemMatch :  { $eq : req.body.texts                    } }     : 1==1;
+        req.body.startDate        ? searchQuery.timeFrames  = { '$elemMatch': { startDate : { '$eq': req.body.startDate } } }   : 1==1;
         req.body.endDate          ? searchQuery.timeFrames  = { '$elemMatch': { endDate   : { '$eq': req.body.endDate   } } }   : 1==1;
 
         if (Object.keys(searchQuery ).length != 0 )
