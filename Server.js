@@ -5,36 +5,41 @@
  require(clientPath+"/message.js");
  require(clientPath+"/TimeFrame.js");
  */
-//yaniv test
+
 require('node-import');
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var fs = require('fs');
-var myCollection  = 'msgs';
-var DBName ='advertisment';
-var mongodb = require('mongodb');
-var assert = require('assert');
+var express     = require('express');
+var bodyParser  = require('body-parser');
+var http        = require('http');
+var path        = require('path');
+var fs          = require('fs');
+var mongodb     = require('mongodb');
+var assert      = require('assert');
 var MongoClient = mongodb.MongoClient;
-var ObjectId = require('mongodb').ObjectID;
-var url = 'mongodb://localhost:27017/'+DBName;
+var ObjectId    = require('mongodb').ObjectID;
+
+
 var driver = express();
 var server = http.createServer(driver);
-var io = require('socket.io').listen(server);
-var cors = require('cors');
 
-// use it before all route definitions
-driver.use(cors({origin: 'http://localhost:8080'}));
-var clientPath = path.resolve('ClientSide/HTML');
-var clientSidePath = path.resolve('ClientSide');
-var contentPath = path.resolve('Content');
+var io     = require('socket.io').listen(server);
+var cors   = require('cors');
 
-driver.use(express.static(contentPath));
+var clientPath      = path.resolve('ClientSide/HTML');
+var clientSidePath  = path.resolve('ClientSide');
+var contentPath     = path.resolve('Content');
 
-driver.use(express.static(clientSidePath));
-driver.use(express.static(clientPath));
+driver.use( cors({origin: 'http://localhost:8080'})     );
+driver.use( express.static(contentPath)                 );
+driver.use( express.static(clientSidePath)              );
+driver.use( express.static(clientPath)                  );
+driver.use( bodyParser.json()                           );    // to support JSON-encoded bodies
+driver.use( bodyParser.urlencoded( { extended: true } ) );    // to support URL-encoded bodies
 
-var socketClientsArr=[];
+var DBName              = 'advertisment';
+var msgsCollection        = 'msgs';
+var screensCollection   = 'screens';
+var url                 = 'mongodb://localhost:27017/'+DBName;
+var socketClientsArr    = [];
 
 var jsonToUpdate= {
     "screenArr":[4],
@@ -50,7 +55,7 @@ var jsonToUpdate= {
         ],
     "imgs":["http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png"],
     "templateURL":"Coca-Cola",
-    "timeFrames":[{"startDate":"01/01/2015","endDate":"12/30/2015","daysArr":[0,1,2,3,4,5,6,7],"startTime":0,"endTime":23.59}],
+    "timeFrames":[{"startDate":"01/01/2015","endDate":"12/30/2016","daysArr":[0,1,2,3,4,5,6,7],"startTime":0,"endTime":23.59}],
     "seconds":5
 };
 
@@ -59,43 +64,49 @@ var jsonToUpdate= {
 
 mongodb.connect(url, function(err, db)
 {
-    if (err) {
-        throw err;
-    }
-    else {
-        console.log('Successfully connected to the database');
-    }
+    if (err)    throw err;
+    else        console.log('Successfully connected to the database');
+
+
+
+
     driver.get('/screen=:screenID', function (req, res) {
         res.sendFile(path.resolve("ClientSide/HTML/ClientPage.html"));
-    })
+    });
+
 
     driver.get('/css=:cssFile', function (req, res) {
         res.sendFile(path.resolve("ClientSide/HTML/LayoutCSS/"+req.params.cssFile));
-    })
+    });
 
 
     driver.get('/script=:scriptFile', function (req, res) {
         res.sendFile(path.resolve("ClientSide/HTML/"+req.params.scriptFile));
-    })
+    });
 
 
     driver.get('/About', function (req, res) {
         addHeaders(res);
         res.sendFile(path.resolve("ClientSide/HTML/AboutUs.html"));
-    })
+    });
 
     driver.get('/Admin', function (req, res) {
         addHeaders(res);
         res.sendFile(path.resolve("ClientSide/HTML/Layout.html"));
-    })
+    });
 
     driver.get('/Content/Images=:image', function (req, res) {
         addHeaders(res);
         res.sendFile(path.resolve("Content/Images/"+req.params.image));
-    })
+    });
+
+
+
+
+
 
     driver.get('/TestUpdate', function (req, res) {
-        var contentCollection = db.collection(myCollection);
+        var contentCollection = db.collection(msgsCollection);
         contentCollection.insert(jsonToUpdate,function(err)
         {
             if (err) res.send(err);
@@ -106,7 +117,7 @@ mongodb.connect(url, function(err, db)
 
                     if(socketClientsArr[i].screenID==(req.query.id))
                     {
-                        var contentCollection = db.collection(myCollection);
+                        var contentCollection = db.collection(msgsCollection);
                         var screenIDAsInt = (req.query.id)*1;
                         var clientID = socketClientsArr[i].clientID;
                         contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
@@ -124,7 +135,64 @@ mongodb.connect(url, function(err, db)
             console.log("connected clients:    "+JSON.stringify(socketClientsArr));
         });
         console.log(req.params.id);
-    })
+    });
+
+
+
+
+    driver.post('/search', function (req, res) {
+
+        var searchQuery = {};
+        var contentCollection = db.collection(msgsCollection);
+
+
+        req.body.screenNumber     ? searchQuery.screenArr   = { $elemMatch : { $eq :(parseInt(req.body.screenNumber))} }   : 1==1;
+        req.body.texts            ? searchQuery.texts       = { $elemMatch : { $eq : req.body.texts                  } }   : 1==1;
+        req.body.startDate        ? searchQuery.timeFrames  = { '$elemMatch': { startDate : { '$eq': req.body.startDate } } }    : 1==1;
+        req.body.endDate          ? searchQuery.timeFrames  = { '$elemMatch': { endDate   : { '$eq': req.body.endDate   } } }   : 1==1;
+
+        if (Object.keys(searchQuery ).length != 0 )
+        {
+            contentCollection.find(searchQuery).toArray(function(err,result)
+            {
+                if (err) res.send(err);
+                else     res.send(result);
+
+            });
+        }
+        else res.send('No attributes to search');
+
+    });
+
+
+
+
+
+
+
+    driver.get('/screensInCity', function (req, res) {
+
+        var contentCollection = db.collection(screensCollection);
+        contentCollection.aggregate(
+            [
+                {
+                    $group  : { _id:'$screenCity', 'count' : { $sum : 1 } }
+                }
+
+            ]).toArray(function(err,result)
+        {
+            if (err) res.send(err);
+            else     res.send(result);
+        });
+    });
+
+
+
+
+
+
+
+
 
     io.sockets.on("connection",function(client){
        client.on("getJsonFromServer",function(data){
@@ -133,7 +201,7 @@ mongodb.connect(url, function(err, db)
                "clientID":client.id,
                "screenID":data
            });
-           var contentCollection = db.collection(myCollection);
+           var contentCollection = db.collection(msgsCollection);
            var screenIDAsInt = (data)*1;
            contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
            {
@@ -151,7 +219,7 @@ mongodb.connect(url, function(err, db)
                 "clientID":client.id,
                 "screenID":data
             });
-            var contentCollection = db.collection(myCollection);
+            var contentCollection = db.collection(msgsCollection);
             var screenIDAsInt = (data)*1;
             contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
             {
