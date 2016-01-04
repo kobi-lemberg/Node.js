@@ -86,9 +86,9 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 require('node-import');
-/*require(__dirname+"/ClientSide/HTML/appdriver.js");
-require(__dirname+"/ClientSide/HTML/message.js");
-require(__dirname+"/ClientSide/HTML/TimeFrame.js");
+/*require(__dirname+"/ClientSide/Screens/appdriver.js");
+require(__dirname+"/ClientSide/Screens/message.js");
+require(__dirname+"/ClientSide/Screens/TimeFrame.js");
 require(clientPath+"/message.js");
 require(clientPath+"/TimeFrame.js");
 */
@@ -100,7 +100,7 @@ var url = 'mongodb://localhost:27017/advertisment';
 
 
 var driver = express();
-var clientPath = path.resolve('ClientSide/HTML');
+var clientPath = path.resolve('ClientSide/Screens');
 var clientSidePath = path.resolve('ClientSide');
 driver.use(express.static(clientSidePath));
 driver.use(express.static(clientPath));
@@ -113,8 +113,8 @@ driver.use(express.static(clientPath));
 driver.get('/screen=:screenID', function (req, res) {
 
     //var msgsToSend = getMsgsFromJSON(req.params.screenID);
-    //res.render( path.resolve("ClientSide/HTML/ClientPage.jade") , { "msgs": (JSON.stringify(msgsToSend)) , "screenID": (JSON.stringify(req.params.screenID))});
-    res.sendFile(path.resolve("ClientSide/HTML/ClientPage.html"));
+    //res.render( path.resolve("ClientSide/Screens/ClientPage.jade") , { "msgs": (JSON.stringify(msgsToSend)) , "screenID": (JSON.stringify(req.params.screenID))});
+    res.sendFile(path.resolve("ClientSide/Screens/ClientPage.html"));
 })
 
 driver.get('/jsonscreen=:screenID', function (req, res) {
@@ -125,7 +125,7 @@ driver.get('/jsonscreen=:screenID', function (req, res) {
     connect(req.params.screenID.toString());
 
    // res.send(msgsToSend);
-    //res.render( path.resolve("ClientSide/HTML/ClientPage.jade") , { "msgs": (JSON.stringify(msgsToSend)) , "screenID": (JSON.stringify(req.params.screenID))});
+    //res.render( path.resolve("ClientSide/Screens/ClientPage.jade") , { "msgs": (JSON.stringify(msgsToSend)) , "screenID": (JSON.stringify(req.params.screenID))});
 })
 
 var server = driver.listen(8081, function () {

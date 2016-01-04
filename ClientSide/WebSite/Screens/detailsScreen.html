@@ -1,0 +1,51 @@
+<h2>Details</h2>
+
+<div>
+    <h4>Screens</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            FirstName
+        </dt>
+
+        <dd class="display">
+            {{fanToEdit.Firstname}}
+        </dd>
+
+        <dt>
+            Last Name
+        </dt>
+
+        <dd class="display">
+            {{fanToEdit.Lastname}}
+        </dd>
+
+        <dt>
+            Gender
+        </dt>
+
+        <dd class="display">
+            {{fanToEdit.Gender}}
+        </dd>
+
+        <dt>
+            BirthDate
+        </dt>
+
+        <dd class="display">
+            {{fanToEdit.Birthdate}}
+        </dd>
+
+        <dt>
+            Seniority
+        </dt>
+
+        <dd class="display">
+            {{fanToEdit.Seniority}}
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button class="Button" ng-click="loadEdit(fanToEdit._id)">Edit</button>
+</p>
+<a class="Button" href="/#/FanClubs/">Back to List</a>

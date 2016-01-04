@@ -1,0 +1,93 @@
+<div>
+    </p>
+
+    <h2>Screens Page.</h2>
+    <section id="search">
+        <h5>Search</h5>
+        <form action="#" method="search" class="form">
+            <table class="table">
+                <tr>
+                    <th>
+                        <label class="col-md-2 control-label">City</label><input class="form-controll" ng-model="searchScreenCity"   name="screenCity" placeholder="City" />
+                    </th>
+                    <th>
+                        <label class="col-md-2 control-label">House</label><input class="form-controll" ng-model="searchScreenHouse"  type="number" name="screenCity" placeholder="House" />
+                    </th>
+                    <th>
+                        <label class="col-md-2 control-label">ZIP</label><input class="form-controll" ng-model="searchScreenZip"  type="number" name="screenCity" placeholder="ZIP" />
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </section>
+
+    <table class="table">
+        <tr>
+            <th>
+                Number
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                Street
+            </th>
+            <th>
+                House
+            </th>
+            <th>
+                ZIP
+            </th>
+            <th></th>
+        </tr>
+
+        <tr ng-repeat ="screen in screens | filter:searchScreenCity  | filter:searchScreenHouse | filter:searchScreenZip">
+            <td>
+                {{screen.screenNumber}}
+            </td>
+            <td>
+                {{screen.screenCity}}
+            </td>
+            <td>
+                {{screen.street}}
+            </td>
+            <td>
+                {{screen.houseNumber}}
+            </td>
+            <td>
+                {{screen.zip}}
+            </td>
+            <td>
+
+                <button class="btn btn-default" ng-click="getEdit(screen)">Edit</button>
+                <button class="btn btn-default"  ng-click="loadDetails(screen._id)">Details</button>
+                <button class="btn btn-default" ng-click="deleteFan(screen._id)">Delete</button>
+            </td>
+        </tr>
+
+
+    </table>
+    <br />
+
+
+    <button class="btn btn-primary" ng-click="groupByGender()">Screens in city</button>
+    </b>
+
+    <b data-tooltip="See how meny Fuus exist according to the ages">
+        <button class="btn btn-primary" ng-click="groupByYear()">GroupByYear</button>
+    </b>
+    <!--TODO If we don't implement this feature we need to remove it -->
+    <b data-tooltip="See number of comments that each user inserts">
+        <a class = "btn btn-primary" href="#">Count comments per user</a>
+    </b>
+
+
+</div>

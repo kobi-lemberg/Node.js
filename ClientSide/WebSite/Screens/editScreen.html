@@ -1,0 +1,56 @@
+<h2>Screens Page.</h2>
+
+<form>
+    <div class="form-horizontal">
+        <h2>Edit Screen</h2>
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="FirstName">FirstName</label>
+            <div class="col-md-10">
+                <input class="text-box single-line valid" id="FirstName" name="FirstName"  ng-model="fanToEdit.Firstname" type="text" value="{{fanToEdit.Firstname}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class = "control-label col-md-2" >Last Name</label>
+            <div class="col-md-10">
+                <input class="text-box single-line valid" id="LastName" name="LastName"  ng-model="fanToEdit.Lastname" type="text" value="{{fanToEdit.Lastname}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class = "control-label col-md-2" >Gender</label>
+            <div class="col-md-10">
+                <input class="text-box single-line valid" id="Gender" name="Gender" ng-model="fanToEdit.Gender" type="text" value="{{fanToEdit.Gender}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class = "control-label col-md-2" >BirthDate</label>
+            <div class="col-md-10">
+                <input class="text-box single-line valid" id="BirthDate" name="BirthDate" ng-model="fanToEdit.Birthdate" type="text" value="{{fanToEdit.Birthdate}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class = "control-label col-md-2" >Seniority</label>
+            <div class="col-md-10">
+                <input class="text-box single-line valid" id="Seniority" name="Seniority" ng-model="fanToEdit.Seniority" type="text"  value="{{fanToEdit.Seniority}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit"  ng-click="UpdatesFans(fanToEdit)"  value="Save" class="Button" />
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<div>
+    <a class="Button" href="/#/FanClubs/">Back to List</a>
+</div>
+
+

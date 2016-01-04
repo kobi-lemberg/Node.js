@@ -1,0 +1,31 @@
+<div>
+    <p>
+    <h2>Group By Gender</h2>
+    </p>
+
+    <table class="table">
+        <tr>
+            <td>
+                Year
+            </td>
+            <td>
+                Count
+            </td>
+        </tr>
+
+        <tr ng-repeat="year in groupFans">
+            <td>
+                {{year._id.Gender}}
+            </td>
+            <td>
+                {{year.count}}
+            </td>
+        </tr>
+
+    </table>
+
+    <div>
+        <br />
+        <a class="Button" href="/#/FanClubs/">Back to List</a>
+    </div>
+</div>

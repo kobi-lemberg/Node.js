@@ -1,9 +1,9 @@
 "use strict";
-/*require(__dirname+"/ClientSide/HTML/appdriver.js");
- require(__dirname+"/ClientSide/HTML/message.js");
- require(__dirname+"/ClientSide/HTML/TimeFrame.js");
- require(clientPath+"/message.js");
- require(clientPath+"/TimeFrame.js");
+/*require(__dirname+"/ClientSide/Screens/appdriver.js");
+ require(__dirname+"/ClientSide/Screens/message.js");
+ require(__dirname+"/ClientSide/Screens/TimeFrame.js");
+ require(clientSideScreenPath+"/message.js");
+ require(clientSideScreenPath+"/TimeFrame.js");
  */
 
 require('node-import');
@@ -11,11 +11,12 @@ var express     = require('express');
 var bodyParser  = require('body-parser');
 var http        = require('http');
 var path        = require('path');
+//var httpLoger = require('morgan');
 var fs          = require('fs');
 var mongodb     = require('mongodb');
 var assert      = require('assert');
 var MongoClient = mongodb.MongoClient;
-var ObjectId    = require('mongodb').ObjectID;
+var ObjectId    = mongodb .ObjectID;
 
 
 var driver = express();
@@ -24,14 +25,29 @@ var server = http.createServer(driver);
 var io     = require('socket.io').listen(server);
 var cors   = require('cors');
 
-var clientPath      = path.resolve('ClientSide/HTML');
-var clientSidePath  = path.resolve('ClientSide');
-var contentPath     = path.resolve('Content');
+
+
+
+
+
+
+//var router = express.Router();
+
+var clientSidePath              = path.resolve('ClientSide');
+console.log("clientSidePath:"+clientSidePath);
+var clientSideScreenPath        = path.resolve('ClientSide/Screens');
+console.log("clientSideScreenPath:"+clientSideScreenPath);
+var webSitePath                 = path.resolve('ClientSide/WebSite');
+console.log("webSitePath:"+webSitePath);
+
+//router.use(httpLoger());
 
 driver.use( cors({origin: 'http://localhost:8080'})     );
-driver.use( express.static(contentPath)                 );
 driver.use( express.static(clientSidePath)              );
-driver.use( express.static(clientPath)                  );
+driver.use( express.static(path.resolve('ClientSide/Screens/ClientCSSAndTemplates/'))              );
+driver.use( express.static(path.resolve('ClientSide/Screens/ClientCSSAndTemplates/CSS/'))              );
+driver.use( express.static(clientSideScreenPath)        );
+driver.use( express.static(webSitePath)                 );
 driver.use( bodyParser.json()                           );    // to support JSON-encoded bodies
 driver.use( bodyParser.urlencoded( { extended: true } ) );    // to support URL-encoded bodies
 
@@ -71,28 +87,28 @@ mongodb.connect(url, function(err, db)
 
 
     driver.get('/screen=:screenID', function (req, res) {
-        res.sendFile(path.resolve("ClientSide/HTML/ClientPage.html"));
+        res.sendFile(path.resolve("ClientSide/Screens/ClientPage.html"));
     });
 
 
     driver.get('/css=:cssFile', function (req, res) {
-        res.sendFile(path.resolve("ClientSide/HTML/LayoutCSS/"+req.params.cssFile));
+        res.sendFile(path.resolve("ClientSide/Screens/ClientsCSSAndTemplates/CSS/"+req.params.cssFile));
     });
 
 
     driver.get('/script=:scriptFile', function (req, res) {
-        res.sendFile(path.resolve("ClientSide/HTML/"+req.params.scriptFile));
+        res.sendFile(path.resolve("ClientSide/Screens/"+req.params.scriptFile));
     });
 
 
     driver.get('/About', function (req, res) {
         addHeaders(res);
-        res.sendFile(path.resolve("ClientSide/HTML/AboutUs.html"));
+        res.sendFile(path.resolve("ClientSide/Screens/AboutUs.html"));
     });
 
-    driver.get('/Admin', function (req, res) {
-        addHeaders(res);
-        res.sendFile(path.resolve("ClientSide/HTML/Layout.html"));
+    //driver.use('/', router);
+    driver.get('/', function (req, res) {
+        res.sendFile(path.resolve("ClientSide/WebSite/Index.html"));
     });
 
     driver.get('/Content/Images=:image', function (req, res) {
@@ -188,13 +204,22 @@ mongodb.connect(url, function(err, db)
 
 
 
+    driver.get('/screensJSON', function (req, res) {
 
+        var contentCollection = db.collection(screensCollection);
+        contentCollection.find({}).toArray(function(err, result)
+        {
+            if (err) throw err;
+            else res.send({JSON : result});
+        });
+    });
 
 
 
 
 
     io.sockets.on("connection",function(client){
+        console.log("New Connection");
        client.on("getJsonFromServer",function(data){
           console.log("client:  "+client+"\ndata:  "+data+"   client id: "+client.id);
            socketClientsArr.push({
@@ -253,15 +278,13 @@ mongodb.connect(url, function(err, db)
 
 
     });
-
-
-
     server.listen(8080, function ()
     {
-        var host = ("127.0.0.1");
+        var host = "127.0.0.1";
         var port = server.address().port;
         console.log("App is currently listening at http://%s:%s", host, port);
-    })
+    });
+
 });
 
 

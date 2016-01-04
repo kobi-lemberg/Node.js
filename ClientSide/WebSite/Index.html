@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- תרגיל 2 - מאת אלון עבאדי 201448057 וקובי למברג 201338217 -->
+
 
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=yes">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive screens - Admin panel</title>
+
+    <!--CSS declaration-->
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <link rel='stylesheet' type='text/css' href="http://localhost:8080/css=bootstrap.css">
-    <link rel='stylesheet' type='text/css' href="http://localhost:8080/css=bootstrap.min.css">
-    <link rel='stylesheet' type='text/css' href="http://localhost:8080/css=Style.css">"
+    <link rel='stylesheet' type='text/css' href="/WebSiteCSS/bootstrap.css">
+    <link rel='stylesheet' type='text/css' href="/WebSiteCSS/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' href="/WebSiteCSS/Style.css">"
+
+    <!--JS declaration-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.0/angular-route.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://localhost:8080/script=bootstrap.js"></script>
-    <script src="http://localhost:8080/script=bootstrap.min.js"></script>
-    <script src="http://localhost:8080/script=d3pie.min.js"></script>
 
-    <!-- bxSlider Javascript file -->
+    <script src="/WebSite/WebSiteJS/bootstrap.js"></script>
+    <script src="/WebSite/WebSiteJS/bootstrap.min.js"></script>
+    <script src="/WebSite/WebSiteJS/d3pie.min.js"></script>
+    <script src="/WebSite/WebSiteJS/angularRouter.js"></script>
+    <script src="/WebSite/Screens/Screens.controller.js"></script>
+
+<!--    &lt;!&ndash; bxSlider Javascript file &ndash;&gt;
     <script src="/js/jquery.bxslider.min.js"></script>
-    <!-- bxSlider CSS file -->
-    <link href="/lib/jquery.bxslider.css" rel="stylesheet" />
+    &lt;!&ndash; bxSlider CSS file &ndash;&gt;
+    <link href="/lib/jquery.bxslider.css" rel="stylesheet" />-->
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
     <script>
         function updateAbout() {
@@ -34,17 +46,16 @@
     </script>
 
 </head>
-<body>
+<body ng-app="angularModule">
 
 <nav>
     <!-- Navigation -->
     <ul>
 
-        <li><a href="javascript:updateAbout();">Screens</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/#/Screens">Screens</a></li>
         <li><a href="http://localhost:8080/About">Messages</a></li>
 
-        <li><a href="http://localhost:8080/About">Price List</a></li>
-        <li><a href="http://localhost:8080/About">Customers</a></li>
 
         <li class="subscribe">
             <div id="transDemo2">
@@ -101,7 +112,7 @@
 </section>
 
 <div id="content">
-    <div id="mainContent">
+    <div id="mainContent" ng-view>
         <h3>Examples</h3>
         <ul class="bxslider">
             <li> h</li>
@@ -224,6 +235,7 @@
         </section>
 
     </aside>
+
 </div>
 <footer>
     <!-- Footer -->

@@ -72,7 +72,7 @@ var loadCSS = function(href) {
 };
 
 /**
- * function to load a given HTML file
+ * function to load a given Screens file
  * href represent the css file name without extension!!
  */
 var loadHTML = function(href) {
