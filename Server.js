@@ -195,9 +195,8 @@ mongodb.connect(url, function(err, db)
 
 
 
-
+//update screen details
     driver.post('/screen', function (req, res) {
-
         var contentCollection = db.collection(screensCollection);
         var screenJson = {
                             'screenNumber'  : parseInt(req.body.screenNumber),

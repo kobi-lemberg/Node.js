@@ -25,7 +25,7 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
     $scope.updateScreen = function(screen){
         console.log("Update:"+screen);
         $http({
-            method: 'PUT',
+            method: 'POST',
             url: '/screen',
             data: screen
         }).then(function successCallback(response) {
@@ -75,7 +75,7 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
     /*Send create page params of new screen details to server*/
     $scope.createScreen = function(screenToCreate){
         $http({
-            method: 'POST',
+            method: 'PUT',
             url: '/createNewScreen',
             data: screenToCreate
         }).then(function successCallback(response) {
