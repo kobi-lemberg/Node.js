@@ -156,6 +156,72 @@ mongodb.connect(url, function(err, db)
 
 
 
+    driver.put('/createNewScreen', function (req, res) {
+
+        var contentCollection = db.collection(screensCollection);
+        var screenJson = {
+                                'screenNumber'  : parseInt(req.body.screenNumber),
+                                'number'        : parseInt(req.body.number),
+                                'zip'           : parseInt(req.body.zip),
+                                'screenCity'    : req.body.screenCity,
+                                'street'        : req.body.street
+                         };
+
+        contentCollection.insert(screenJson,function(err)
+        {
+            if (err) res.send(err);
+            else     res.send('Screen was insert to the databse');
+
+        });
+
+
+    });
+
+
+
+    driver.delete('/deleteScreen=:screenNumber', function (req, res) {
+
+        var contentCollection = db.collection(screensCollection);
+
+        contentCollection.remove( { screenNumber : parseInt(req.params.screenNumber) } ,function(err)
+        {
+            if (err) res.send('err');
+            else     res.send('Screen was deleted');
+
+        });
+
+
+    });
+
+
+
+
+    driver.post('/screen', function (req, res) {
+
+        var contentCollection = db.collection(screensCollection);
+        var screenJson = {
+                            'screenNumber'  : parseInt(req.body.screenNumber),
+                            'number'        : parseInt(req.body.number),
+                            'zip'           : parseInt(req.body.zip),
+                            'screenCity'    : req.body.screenCity,
+                            'street'        : req.body.street
+                         };
+
+        contentCollection.update( { screenNumber : parseInt(req.body.screenNumber) } , { $set : screenJson } ,function(err)
+        {
+            if (err) res.send('err');
+            else     res.send('Screen was updated');
+
+        });
+
+
+    });
+
+
+
+
+
+
     driver.post('/search', function (req, res) {
 
         var searchQuery = {};
