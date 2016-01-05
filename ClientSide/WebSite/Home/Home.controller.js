@@ -1,11 +1,11 @@
-angular.module('angularModule').controller('ScreensController',function($rootScope,$scope,$http, $route, $routeParams) {
+angular.module('angularModule').controller('AdvertisementController',function($rootScope,$scope,$http, $route, $routeParams) {
     var groupScreensByCityFromController;
     /*Retreive all screens from node.js server*/
     $http({
         method: 'GET',
-        url: '/screensJSON'
+        url: '/advertisementJSON'
     }).then(function successCallback(response) {
-        $scope.screens = response.data.JSON;
+        $scope.advertisement = response.data.JSON;
     }, function errorCallback(response) {
         console.log("error with  get screensJSON");
     });

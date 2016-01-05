@@ -2,38 +2,38 @@
 
 <form>
     <div class="form-horizontal">
-        <h2>Edit Screen</h2>
+        <h2>Create Screen</h2>
         <hr />
 
         <div class="form-group">
             <label class = "control-label col-md-2" for="screenCity">Screen City</label>
             <div class="col-md-10">
-                <input class="text-box single-line valid" id="screenCity" name="screenCity"  ng-model="screenToEdit.screenCity" type="text" value="{{screenToEdit.screenCity}}">
+                <input class="text-box single-line valid" id="screenCity" name="screenCity"  ng-model="screenToCreate.screenCity" type="text" placeholder="City">
             </div>
         </div>
         <div class="form-group">
             <label class = "control-label col-md-2" for="street">Screen Street</label>
             <div class="col-md-10">
-                <input class="text-box single-line valid" id="street" name="street" ng-model="screenToEdit.street" type="text" value="{{screenToEdit.street}}">
+                <input class="text-box single-line valid" id="street" name="street" ng-model="screenToCreate.street" type="text" placeholder="Street">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2" for="houseNumber">House Number</label>
             <div class="col-md-10">
-                <input class="text-box single-line valid" id="houseNumber" name="houseNumber"  ng-model="screenToEdit.houseNumber" type="number" value="{{screenToEdit.houseNumber}}">
+                <input class="text-box single-line valid" id="houseNumber" name="houseNumber"  ng-model="screenToCreate.houseNumber" type="number" placeholder="House number">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2" for="zipCode">ZIP code</label>
             <div class="col-md-10">
-                <input class="text-box single-line valid" id="zipCode" name="zipCode"  ng-model="screenToEdit.zip" type="number" value="{{screenToEdit.zip}}">
+                <input class="text-box single-line valid" id="zipCode" name="zipCode"  ng-model="screenToCreate.zip" type="number" placeholder="ZIP code">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2" for="screenNumber">Screen Number</label>
             <div class="col-md-10">
-                <input class="text-box single-line valid" id="screenNumber" name="screenNumber"  ng-model="screenToEdit.screenNumber" type="number" value="{{screenToEdit.screenNumber}}">
-                <input type="submit" class="btn btn-default" ng-click="updateScreen(screenToEdit)"  value="Update"/>
+                <input class="text-box single-line valid" id="screenNumber" name="screenNumber"  ng-model="screenToCreate.screenNumber" type="number" placeholder="Screen number">
+                <input type="submit" class="btn btn-default" ng-click="createScreen(screenToCreate)"  value="Create"/>
             </div>
         </div>
 

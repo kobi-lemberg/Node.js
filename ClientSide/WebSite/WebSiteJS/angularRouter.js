@@ -1,6 +1,3 @@
-/**
- * Created by refael yehuda on 12/23/2015.
- */
 'use strict'             //module
 var app = angular.module('angularModule', ['ngRoute']);
 
@@ -8,8 +5,8 @@ app.config(['$routeProvider',function($routeProvider){
     $routeProvider
         .when('/',
             {
-                controller: 'BlogCtrl',
-                templateUrl: '/app/Blog/Blog.html'
+                controller: 'HomeController',
+                templateUrl: '/WebSite/Home/Home.html'
 
             })
 
@@ -31,10 +28,23 @@ app.config(['$routeProvider',function($routeProvider){
                 templateUrl: '/WebSite/Screens/editScreen.html'
 
             })
-        .when('/FanClubs/details',
+        .when('/Screens/createScreen',
             {
-                controller: 'FanClubsCtrl',
-                templateUrl: '/app/FanClubs/DetailsFans.html'
+                controller: 'ScreensController',
+                templateUrl: '/WebSite/Screens/createScreen.html'
+
+            })
+        .when('/Advertisement',
+            {
+                controller: 'AdvertisementController',
+                templateUrl: '/WebSite/Messages/Advertisement.html'
+
+            })
+
+        .when('/About',
+            {
+                controller: 'AboutController',
+                templateUrl: '/WebSite/About/AboutUs.html'
 
             })
         .when('/FanClubs/GroupFansByBirthdate',
@@ -43,10 +53,10 @@ app.config(['$routeProvider',function($routeProvider){
                 templateUrl: '/app/FanClubs/GroupFansByBirthdate.html'
 
             })
-        .when('/FanClubs/GroupFansByGender',
+        .when('/Screens/GroupScreensByCity',
             {
-                controller: 'FanClubsCtrl',
-                templateUrl: '/app/FanClubs/GroupScreensByCity.html'
+                controller: 'ScreensController',
+                templateUrl: '/WebSite/Screens/GroupScreensByCity.html'
 
             })
         .when('/Admin',

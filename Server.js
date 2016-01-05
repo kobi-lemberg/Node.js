@@ -111,9 +111,9 @@ mongodb.connect(url, function(err, db)
         res.sendFile(path.resolve("ClientSide/WebSite/Index.html"));
     });
 
-    driver.get('/Content/Images=:image', function (req, res) {
+    driver.get('/Images=:image', function (req, res) {
         addHeaders(res);
-        res.sendFile(path.resolve("Content/Images/"+req.params.image));
+        res.sendFile(path.resolve("ClientSide/WebSite/WebSiteContent/WebSiteImages/"+req.params.image));
     });
 
 
@@ -187,7 +187,7 @@ mongodb.connect(url, function(err, db)
 
 
     driver.get('/screensInCity', function (req, res) {
-
+        console.log("Get groupby query - screen by city")
         var contentCollection = db.collection(screensCollection);
         contentCollection.aggregate(
             [
@@ -214,7 +214,15 @@ mongodb.connect(url, function(err, db)
         });
     });
 
+    driver.get('/advertisementJSON', function (req, res) {
 
+        var contentCollection = db.collection(msgsCollection);
+        contentCollection.find({}).toArray(function(err, result)
+        {
+            if (err) throw err;
+            else res.send({JSON : result});
+        });
+    });
 
 
 
