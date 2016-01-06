@@ -223,15 +223,38 @@ mongodb.connect(url, function(err, db)
 
     driver.post('/searchMsg', function (req, res) {
 
-        console.log(req.body)
-
         var searchQuery = {};
         var contentCollection = db.collection(msgsCollection);
 
 
-        req.body.texts            ? searchQuery.texts       = { $elemMatch :  { $eq : req.body.texts                    } }     : 1==1;
-        req.body.name             ? searchQuery.name        =   req.body.name                                                   : 1==1;
-        req.body.seconds          ? searchQuery.seconds     =   parseInt(req.body.seconds)                                      : 1==1;
+        req.body.texts            ? searchQuery.texts       = { $elemMatch :  { $eq : req.body.texts       } }     : 1==1;
+        req.body.name             ? searchQuery.name        =   req.body.name                                      : 1==1;
+        req.body.seconds          ? searchQuery.seconds     =   parseInt(req.body.seconds)                         : 1==1;
+
+        if (Object.keys(searchQuery ).length != 0 )
+        {
+            contentCollection.find(searchQuery).toArray(function(err,result)
+            {
+                if (err) res.send(err);
+                else     res.send(result);
+
+            });
+        }
+        else res.send('No attributes to search');
+
+    });
+
+
+
+    driver.post('/searchScreen', function (req, res) {
+
+        var searchQuery = {};
+        var contentCollection = db.collection(screensCollection);
+
+
+        req.body.screenCity            ? searchQuery.screenCity       = req.body.screenCity                 : 1==1;
+        req.body.street                ? searchQuery.street           = req.body.street                     : 1==1;
+        req.body.houseNumber           ? searchQuery.houseNumber      = parseInt(req.body.houseNumber)      : 1==1;
 
         if (Object.keys(searchQuery ).length != 0 )
         {
