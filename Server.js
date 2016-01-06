@@ -161,7 +161,7 @@ mongodb.connect(url, function(err, db)
         var contentCollection = db.collection(screensCollection);
         var screenJson = {
                                 'screenNumber'  : parseInt(req.body.screenNumber),
-                                'number'        : parseInt(req.body.number),
+                                'houseNumber'        : parseInt(req.body.houseNumber),
                                 'zip'           : parseInt(req.body.zip),
                                 'screenCity'    : req.body.screenCity,
                                 'street'        : req.body.street
@@ -200,7 +200,7 @@ mongodb.connect(url, function(err, db)
         var contentCollection = db.collection(screensCollection);
         var screenJson = {
                             'screenNumber'  : parseInt(req.body.screenNumber),
-                            'number'        : parseInt(req.body.number),
+                            'houseNumber'        : parseInt(req.body.houseNumber),
                             'zip'           : parseInt(req.body.zip),
                             'screenCity'    : req.body.screenCity,
                             'street'        : req.body.street
