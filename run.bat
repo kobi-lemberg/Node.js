@@ -25,5 +25,5 @@ ping -n 8 127.0.0.1 >nul
 start cmd /k node Server.js
 ping -n 8 127.0.0.1 >nul
 
-start chrome.exe --allow-file-access-from-files http://localhost:8081/screen=4
+start chrome.exe --allow-file-access-from-files http://localhost:8080/screen=4
 pause

@@ -1,5 +1,7 @@
 'use strict'             //module
-var app = angular.module('angularModule', ['ngRoute']);
+var app = angular.module('angularModule', ['ngRoute','aboutangularModule','homeangularModule']);
+var about = angular.module('aboutangularModule', ['ngRoute']);
+var home = angular.module('homeangularModule', ['ngRoute']);
 
 app.config(['$routeProvider',function($routeProvider){
     $routeProvider

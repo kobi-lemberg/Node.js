@@ -1,14 +1,22 @@
 angular.module('angularModule').controller('AdvertisementController',function($rootScope,$scope,$http, $route, $routeParams) {
-    var groupScreensByCityFromController;
     /*Retreive all screens from node.js server*/
+    console.log("AdvertisementControllerIsUp!");
     $http({
         method: 'GET',
         url: '/advertisementJSON'
     }).then(function successCallback(response) {
-        $scope.advertisement = response.data.JSON;
+        console.log("GET:advertisment - Success");
+        $scope.advertisements = response.data.JSON;
     }, function errorCallback(response) {
         console.log("error with  get screensJSON");
     });
+
+    /*Render edit page with specific screen details to update*/
+    $scope.showScreenExample = function(){
+            var win = window.open("/Screen=4", '_blank');
+            win.focus();
+    }
+
 
     /*Render edit page with specific screen details to update*/
     $scope.getEdit = function(screen){

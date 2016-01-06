@@ -23,40 +23,43 @@
     <h5>Details</h5>
     <table class="table">
         <tr>
-            <th style="max-width: 100px !important; ">Screens</th>
+            <th>Screens</th>
             <th>Name</th>
             <th>Texts</th>
-            <!--<th>Images</th>-->
-<!--            <th>Template</th>
-            <th>Time Frames</th>-->
-<!--            <th>Seconds</th>-->
+            <th>Images</th>
+            <th>Template</th>
+            <th>Time Frames</th>
+            <th>Seconds</th>
             <th>Actions:</th>
         </tr>
 
         <tr ng-repeat ="advertisement in advertisements | filter:searchScreenCity  | filter:searchScreenHouse | filter:searchScreenZip">
             <!--<td>{{advertisement.screenArr}}</td>-->
-            <td style="max-width: 100px !important;">
-                {{advertisement.screenArr}}
+            <td>
+                <table>
+                    <tr  ng-repeat="screen in advertisement.screenArr"><td style="overflow:scroll;overflow-y:hidden; width:110px;">{{screen}}</td></tr>
+                </table>
             </td>
             <td>{{advertisement.name}}</td>
             <!--<td>{{advertisement.texts}}</td>-->
             <td>
-                {{advertisement.texts}}
-
+                <table>
+                    <tr  ng-repeat="text in advertisement.texts"><td style="overflow:scroll;overflow-y:hidden; width:300px; max-height:75px;">{{text}}</td></tr>
+                </table>
             </td>
-            <!--<td>{{advertisement.imgs}}</td>-->
-<!--            <td>{{advertisement.templateURL}}</td>
-            <td>{{advertisement.timeFrames}}</td>-->
-<!--            <td>{{advertisement.seconds}}</td>-->
+            <td>{{advertisement.imgs}}</td>
+            <td>{{advertisement.templateURL}}</td>
+            <td>{{advertisement.timeFrames}}</td>
+            <td>{{advertisement.seconds}}</td>
             <td>
                 <button class="btn btn-default" ng-click="getEdit(screen)">Edit</button>
                 <button class="btn btn-default" ng-click="deleteScreenByID(screen._id)">Delete</button>
             </td>
         </tr>
         <tr>
-            <th><button class="btn btn-default" ng-click="groupScreensByCity()">Count Messages per screen</button></th>
-            <th><button class="btn btn-default" ng-click="showScreenExample()">Screen example</button></th>
-
+            <th><button class="btn btn-default" ng-click="getCreate(screen)">Create</button></th>
+            <th><button class="btn btn-default" ng-click="groupScreensByCity()">Count Screens in city</button></th>
+            <th></th><th></th><th></th><th></th>
         </tr>
     </table>
     </br>

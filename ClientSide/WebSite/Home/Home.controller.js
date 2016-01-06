@@ -1,4 +1,4 @@
-angular.module('angularModule').controller('HomeController',function($rootScope,$scope,$http, $route, $routeParams) {
+angular.module('homeangularModule').controller('HomeController',function($rootScope,$scope,$http, $route, $routeParams) {
 
     /*Retreive all screens from node.js server*/
     $http({
@@ -7,7 +7,7 @@ angular.module('angularModule').controller('HomeController',function($rootScope,
     }).then(function successCallback(response) {
         console.log(response.data);
         $rootScope.screensForGoogleMaps = response.data.JSON;
-        $scope.screensForGoogleMaps = response.data.JSON;
+       // $scope.screensForGoogleMaps = response.data.JSON;
     }, function errorCallback(response) {
         console.log("error with  get screensJSON");
     });

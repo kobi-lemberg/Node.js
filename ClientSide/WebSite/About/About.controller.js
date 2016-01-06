@@ -1,4 +1,4 @@
-angular.module('angularModule').controller('AboutController',function($rootScope,$scope,$http, $route, $routeParams) {
+angular.module('aboutangularModule').controller('AboutController',function($rootScope,$scope,$http, $route, $routeParams) {
     var groupScreensByCityFromController;
     /*Retreive all screens from node.js server*/
     $http({
