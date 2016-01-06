@@ -221,16 +221,17 @@ mongodb.connect(url, function(err, db)
 
 
 
-    driver.post('/search', function (req, res) {
+    driver.post('/searchMsg', function (req, res) {
+
+        console.log(req.body)
 
         var searchQuery = {};
         var contentCollection = db.collection(msgsCollection);
 
 
-        req.body.screenNumber     ? searchQuery.screenArr   = { $elemMatch :  { $eq :(parseInt(req.body.screenNumber))  } }     : 1==1;
         req.body.texts            ? searchQuery.texts       = { $elemMatch :  { $eq : req.body.texts                    } }     : 1==1;
-        req.body.startDate        ? searchQuery.timeFrames  = { '$elemMatch': { startDate : { '$eq': req.body.startDate } } }   : 1==1;
-        req.body.endDate          ? searchQuery.timeFrames  = { '$elemMatch': { endDate   : { '$eq': req.body.endDate   } } }   : 1==1;
+        req.body.name             ? searchQuery.name        =   req.body.name                                                   : 1==1;
+        req.body.seconds          ? searchQuery.seconds     =   parseInt(req.body.seconds)                                      : 1==1;
 
         if (Object.keys(searchQuery ).length != 0 )
         {
