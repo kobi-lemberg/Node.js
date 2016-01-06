@@ -1,0 +1,72 @@
+<section>
+    <article class="blogPost">
+        <header>
+            <h2>Product introduction</h2>
+            <p>Published on <time datetime="2009-06-29T23:31+01:00">June 29th 2009</time> by <a href="http://www.nytimes.com/">The New York Times</a></p>
+        </header>
+        <div>
+            <p>
+                Stand out from the crowd and turn your retail location into a destination for consumers. Gesture control interactive visual display systems are ideal for product advertising, retail merchandising and point-of-sale promotions. Turn any size store window, digital sign, wall, floor, cash counter or other surface into an interactive screen, an informative multi touch surface providing an entertaining 24-hour interactive billboard or portal to multi-media content (product info, advertising or games). For a portable, turnkey, plug and play interactive advertising and entertainment solution in retail environments check our Cube floor projection system.</p>
+            <img src="/images=intro.png" alt="Flower" />
+
+            <p>. Vestibulum iaculis ullamcorper diam consectetur sagittis. Quisque vitae mauris ut elit semper condimentum varius nec nisl. Nulla tempus porttitor dolor ac eleifend. Proin vitae purus lectus, a hendrerit ipsum. Aliquam mattis lacinia risus in blandit.</p>
+            <video controls="controls">
+                <source src="http://ctmdata.s3.amazonaws.com/websiteassets/videos/graffitiwall.mp4?_=1" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            <p>Vivamus vitae nulla dolor. Suspendisse eu lacinia justo. Vestibulum a felis ante, non aliquam leo. Aliquam eleifend, est viverra semper luctus, metus purus commodo elit, a elementum nisi lectus vel magna. Praesent faucibus leo sit amet arcu vehicula sed facilisis eros aliquet. Etiam sodales, enim sit amet mollis vestibulum, ipsum sapien accumsan lectus, eget ultricies arcu velit ut diam. Aenean fermentum luctus nulla, eu malesuada urna consequat in. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque massa lacus, sodales id facilisis ac, lobortis sed arcu. Donec hendrerit fringilla ligula, ac rutrum nulla bibendum id. Cras sapien ligula, tincidunt eget euismod nec, ultricies eu augue. Nulla vitae velit sollicitudin magna mattis eleifend. Nam enim justo, vulputate vitae pretium ac, rutrum at turpis. Aenean id magna neque. Sed rhoncus aliquet viverra.</p>
+        </div>
+    </article>
+</section>
+<section id="comments">
+    <h3>Our Screen deployment</h3>
+    <div id="map"></div>
+    <script>
+
+        function initMap() {
+            var scope = angular.element(document.querySelector('.blogPost')).scope();
+            var t  = scope.screensForGoogleMaps;
+            console.log("t:"+t);
+            var myLatLng = { lat: 32.0852999, lng: 34.78176759999997 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 11,
+                center: myLatLng
+            });
+            var geocoder = new google.maps.Geocoder();
+            var mapper=(function () {
+
+
+
+                for (var k in t) {
+                    geocoder.geocode({ 'address': t[k].screenCity }, function (results, status) {
+
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            var latitude = results[0].geometry.location.lat();
+                            var longitude = results[0].geometry.location.lng();
+                        }
+                        var myLatLng2 = { lat: latitude, lng: longitude };
+                        console.log(latitude, longitude, data[1].Address)
+                        var marker = new google.maps.Marker({
+                            position: myLatLng2,
+                            map: map,
+                            title: 'Screen deployment'
+                        });
+                    });
+                }
+            });
+
+        }
+        initMap();
+    </script>
+    <style>
+        #map {
+            border-radius: 10px;
+            height: 550px;
+            width: 550px;
+            background-color: #efefef;
+            margin-bottom: 10px;
+
+        }
+    </style>
+</section>
+

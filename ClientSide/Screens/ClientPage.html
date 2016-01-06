@@ -15,10 +15,13 @@
         {
             var screenID = (window.location.pathname).charAt(window.location.pathname.length-1);
             var server = io.connect('http://127.0.0.1:8080');
-            server.emit("getJsonFromServer",screenID);
+            console.log("Server:"+server);
+            //server.emit("getJsonFromServer",screenID);
+            console.log(server.emit("getJsonFromServer",screenID));
             server.on("pushJsonToClient",function(data){
 
                 var dataAsObject = JSON.parse(data);
+                console.log("JSON:"+data);
                 //After we have all the msgs, lets start the app:
                 buildMsgsAndStartApp(dataAsObject,0,window.location.pathname,true);
 
@@ -49,6 +52,6 @@
     </script>
 </head>
 <body>
-
+Hello
 </body>
 </html>

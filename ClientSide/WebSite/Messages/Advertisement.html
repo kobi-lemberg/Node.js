@@ -1,0 +1,52 @@
+<div>
+    </p>
+    <h2>Advertisement Page.</h2>
+    <section id="search">
+        <h5>Search</h5>
+        <form action="#" method="search" class="form">
+            <table class="table">
+                <tr>
+                    <th>
+                        <label class="col-md-2 control-label">City</label><input class="form-controll" ng-model="searchScreenCity"   name="screenCity" placeholder="City" />
+                    </th>
+                    <th>
+                        <label class="col-md-2 control-label">House</label><input class="form-controll" ng-model="searchScreenHouse"  type="number" name="screenCity" placeholder="House" />
+                    </th>
+                    <th>
+                        <label class="col-md-2 control-label">ZIP</label><input class="form-controll" ng-model="searchScreenZip"  type="number" name="screenCity" placeholder="ZIP" />
+                    </th>
+                </tr>
+                <tr><td></td><td></td><td></td></tr>
+            </table>
+        </form>
+    </section>
+    <h5>Details</h5>
+    <table class="table">
+        <tr>
+            <th>Number</th>
+            <th>City</th>
+            <th>Street</th>
+            <th>House</th>
+            <th>ZIP</th>
+            <th>Actions:</th>
+        </tr>
+
+        <tr ng-repeat ="screen in screens | filter:searchScreenCity  | filter:searchScreenHouse | filter:searchScreenZip">
+            <td>{{screen.screenNumber}}</td>
+            <td>{{screen.screenCity}}</td>
+            <td>{{screen.street}}</td>
+            <td>{{screen.houseNumber}}</td>
+            <td>{{screen.zip}}</td>
+            <td>
+                <button class="btn btn-default" ng-click="getEdit(screen)">Edit</button>
+                <button class="btn btn-default" ng-click="deleteScreenByID(screen._id)">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <th><button class="btn btn-default" ng-click="getCreate(screen)">Create</button></th>
+            <th><button class="btn btn-default" ng-click="groupScreensByCity()">Count Screens in city</button></th>
+            <th></th><th></th><th></th><th></th>
+        </tr>
+    </table>
+    </br>
+</div>
