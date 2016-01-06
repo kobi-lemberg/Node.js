@@ -200,7 +200,7 @@ mongodb.connect(url, function(err, db)
         var contentCollection = db.collection(screensCollection);
         var screenJson = {
                             'screenNumber'  : parseInt(req.body.screenNumber),
-                            'houseNumber'        : parseInt(req.body.houseNumber),
+                            'houseNumber'   : parseInt(req.body.houseNumber),
                             'zip'           : parseInt(req.body.zip),
                             'screenCity'    : req.body.screenCity,
                             'street'        : req.body.street
@@ -246,6 +246,28 @@ mongodb.connect(url, function(err, db)
     });
 
 
+
+
+
+    driver.get('/screenCountForMsg', function (req, res) {
+
+        console.log("Get screen count for each msg");
+        var contentCollection = db.collection(msgsCollection);
+        var countArray = [];
+
+        contentCollection.find({}).toArray(function(err, result)
+        {
+            if (err) throw err;
+            else
+            {
+                result.map(function(msg){
+                    countArray.push({'_id': msg.name, 'count':msg.screenArr.length});
+                });
+            }
+            res.send(countArray);
+        });
+
+    });
 
 
 
