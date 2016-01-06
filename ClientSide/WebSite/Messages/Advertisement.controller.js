@@ -1,6 +1,6 @@
 angular.module('angularModule').controller('AdvertisementController',function($rootScope,$scope,$http, $route, $routeParams) {
-    /*Retreive all screens from node.js server*/
-    console.log("AdvertisementControllerIsUp!");
+
+    /*Retreive all Advertisement from node.js server*/
     $http({
         method: 'GET',
         url: '/advertisementJSON'
@@ -11,7 +11,7 @@ angular.module('angularModule').controller('AdvertisementController',function($r
         console.log("error with  get screensJSON");
     });
 
-    /*Render edit page with specific screen details to update*/
+    /*Open screen 4 in new tab*/
     $scope.showScreenExample = function(){
             var win = window.open("/Screen=4", '_blank');
             win.focus();
@@ -57,22 +57,21 @@ angular.module('angularModule').controller('AdvertisementController',function($r
     }
 
     /*Group screen by their city - GroupBY query*/
-    $scope.groupScreensByCity = function(){
+    $scope.getMessageDistribution = function(){
 
         $http({
             method: 'GET',
-            url: '/screensInCity'
+            url: '/screenCountForMsg'
         }).then(function successCallback(response) {
             console.log(response.data);
-            groupScreensByCityFromController=response.data;
-            $rootScope.groupScreensByTheirCity = response.data;
-            $rootScope.groupScreensByTheirCity.forEach(function (obj) {
+            $rootScope.sumMessageInScreens = response.data;
+            $rootScope.sumMessageInScreens.forEach(function (obj) {
                 console.log(obj._id+","+obj.count);
             })
-            window.location.href = "/#/Screens/GroupScreensByCity"
+            window.location.href = "/#/Advertisement/CountScreensForMSG"
         }, function errorCallback(response) {
             console.log("Query Group Screens by city - ERROR");
-            window.location.href = "/#/Screens";
+            window.location.href = "/#/Advertisement";
         });
     }
 

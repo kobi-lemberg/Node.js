@@ -142,31 +142,28 @@
         </script>
 
         <section id="search">
-            <h3>Search Message</h3>
-            <form action="/Blog/Search" method="get">
-                <span class="input_title">From Date</span>
-                <input type="date" name="datefrom" /> <br /><span class="input_title">Until Date</span>
-                <input type="date" name="dateto" /> <br />
-
-                <span class="input_title">Client</span>
-                <input name="author" type="search" placeholder="Client" />
-
-                <br />
-                <span class="input_title">Texts</span>
-
-                <input type="search" name="title" placeholder="Texts"><br />
-                <br />
-
-                <h3>Number of advertisment per screen</h3>
-                <span class="input_title">Screen</span>
-                <input type="number" name="commentswords" placeholder="Screen ID" />
-
-                <br />
-                <span class="input_title">Number of advertisment</span>
-                <input type="range" name="comments" min="0" max="10" value="0" />
+            <h3>Search Advertisement</h3>
+            <form action="/searchMsg" method="post">
+                <span class="input_title">Name</span>
+                <input type="search" name="name" placeholder="Advertisement name"> <br />
+                <span class="input_title">Text</span>
+                <input type="search" name="texts" placeholder="Text"> <br />
+                <span class="input_title">Seconds duration</span>
+                <input type="search" name="seconds" placeholder="Seconds"> <br />
+                <input type="submit" class="btn btn-primary" value="Submit Search Query"/><br/>
+                <br></br>
+            </form>
 
 
-                <input type="submit" class="btn btn-primary" value="Submit Search Query" />
+            <h3>Search Screen</h3>
+            <form action="/searchScreen" method="post">
+                <span class="input_title">City</span>
+                <input type="search" name="screenCity" placeholder="Screen City"> <br />
+                <span class="input_title">Street</span>
+                <input type="search" name="street" placeholder="Street"> <br />
+                <span class="input_title">House Number</span>
+                <input type="search" name="houseNumber" placeholder="House number"> <br />
+                <input type="submit" class="btn btn-primary" value="Submit Search Query"/><br/>
             </form>
 
         </section>
@@ -180,57 +177,29 @@
                 console.log("ready!");
 
             });
+            function searchAdvertisementByUser()
+            {
+                $("#PostQuestionForm").submit(function (event) {
+                    event.preventDefault();
 
-            function FindShop() {
-                var geocoder = new google.maps.Geocoder();
-                var myAddress = $('#myAddress').val();
+                    var $form = $(this),
+                            Text = $form.find("textarea").val(),
+                            url = "/Questions/CreateNewQuestion";
 
-                geocoder.geocode({ 'address': myAddress }, function (results, status) {
-                    // console.log(results);
+                    $("textarea").val(" ");
+                    $("textarea").focus();
 
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        var myX = results[0].geometry.location.lat();
-                        var myY = results[0].geometry.location.lng();
-                    }
+                    //console.log("Submitting Text: " + Text);
 
-                    $.get('/Shop/GetShops', {}, function (data, status) {
-                        var bestShop = "No Shop";
-                        var bestDistance = 11000;
-                        $(data).each(function (i,shop) {
-                            geocoder.geocode({ 'address': shop.Address }, function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    var latitude = results[0].geometry.location.lat();
-                                    var longitude = results[0].geometry.location.lng();
-                                    var distance = Math.abs(latitude - myX) + Math.abs(longitude - myY);
+                    var posting = $.post(url, { "Text": Text });
 
-                                    if (distance < bestDistance) {
-                                        bestDistance = distance;
-                                        bestShop = shop.Address;
-                                        $("#bestShop").html("The Best shop for you is: <br /><strong>" + bestShop + "</strong>");
-                                    }
-                                }
-                            });
-                        });
+                    posting.done(function (data) {
+                        //  console.log(data);
                     })
-
-                })
+                });
             }
-
-
-
         </script>
 
-        <section id="locateShop">
-            <header>
-                <h3>Find Closest Screen</h3>
-            </header>
-            <span id="bestShop"><br /> Enter wanted location:</span>
-            <input type="search" id="myAddress" style="width: 252px; margin-bottom:10px; text-align: center;" />
-            <br />
-
-            <input type="submit" onclick="FindShop();" class="btn btn-primary" style="background-color: #428BCA; color: #fff;" value="Find Closest Screen" /> <a style="margin-left: 5px;"href="/Shop/">Go to Price List</a>
-
-        </section>
 
     </aside>
 
@@ -273,9 +242,6 @@
 
     </div>
 </footer>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
 </body>
 </html>
 

@@ -1,24 +1,24 @@
 <div>
     <p>
-    <h2>Screens by City</h2>
+    <h2>Advertisement distribution</h2>
     </p>
 
     <table class="table">
         <tr>
             <th>
-                City
+                Message
             </th>
             <th>
-                Count
+                Number Of scrrens
             </th>
         </tr>
 
-        <tr ng-repeat="city in groupScreensByTheirCity">
+        <tr ng-repeat="msg in sumMessageInScreens">
             <td>
-                {{city._id}}
+                {{msg._id}}
             </td>
             <td>
-                {{city.count}}
+                {{msg.count}}
             </td>
         </tr>
 
@@ -26,9 +26,9 @@
 
     <div>
         <br />
-        <a class="Button" href="/#/Screens/">Back to Screens</a>
+        <a class="Button" href="/#/Advertisement/">Back to Advertisement</a>
     </div>
-    <div id="GroupByChart"></div>
+    <div id="Chart"></div>
 
     <script>
 
@@ -38,7 +38,7 @@
 
         var setDataToCharts=(function() {
             var scope = angular.element(document.querySelector(".table")).scope();
-            var t  = scope.groupScreensByTheirCity;
+            var t  = scope.sumMessageInScreens;
             console.log("t:"+t);
             var randomColors=["#830909","#bf273e","#daca61","#0c6197","#4daa4b","#90c469","#e4a14b","#e98125","#cb2121","#830909","#923e99","#ae83d5","#ce2aeb","#2484c1"];
             console.log("starting chart");
@@ -58,22 +58,24 @@
             });
 
             console.log(JSON.stringify(finalChartData));
-            var pie = new d3pie("GroupByChart", {
+            var pie = new d3pie("Chart", {
                 "header": {
                     "title": {
-                        "text": "Screens Distibuition",
-                        "fontSize": 24,
-                        "font": "open sans"
+                        "text": "Advertisements",
+                        "fontSize": 34,
+                        "font": "courier"
                     },
                     "subtitle": {
-                        "text": "A full pie chart to show number of screens for each city",
+                        "text": "Advertisement distribution ",
                         "color": "#999999",
-                        "fontSize": 12,
-                        "font": "open sans"
+                        "fontSize": 10,
+                        "font": "courier"
                     },
-                    "titleSubtitlePadding": 9
+                    "location": "pie-center",
+                    "titleSubtitlePadding": 10
                 },
                 "footer": {
+                    "text": "Advertisement distribution",
                     "color": "#999999",
                     "fontSize": 10,
                     "font": "open sans",
@@ -81,32 +83,36 @@
                 },
                 "size": {
                     "canvasWidth": 590,
-                    "pieOuterRadius": "90%"
+                    "pieInnerRadius": "95%",
+                    "pieOuterRadius": "70%"
                 },
                 "data": {
-                    "sortOrder": "value-desc",
+                    "sortOrder": "label-desc",
                     "content": finalChartData
                 },
                 "labels": {
                     "outer": {
-                        "pieDistance": 32
+                        "format": "label-percentage1",
+                        "pieDistance": 20
                     },
                     "inner": {
-                        "hideWhenLessThanPercentage": 3
+                        "format": "none"
                     },
                     "mainLabel": {
                         "fontSize": 11
                     },
                     "percentage": {
-                        "color": "#ffffff",
+                        "color": "#999999",
+                        "fontSize": 11,
                         "decimalPlaces": 0
                     },
                     "value": {
-                        "color": "#adadad",
+                        "color": "#cccc43",
                         "fontSize": 11
                     },
                     "lines": {
-                        "enabled": true
+                        "enabled": true,
+                        "color": "#777777"
                     },
                     "truncation": {
                         "enabled": true
@@ -120,9 +126,8 @@
                     }
                 },
                 "misc": {
-                    "gradient": {
-                        "enabled": true,
-                        "percentage": 100
+                    "colors": {
+                        "segmentStroke": "#000000"
                     }
                 }
             });

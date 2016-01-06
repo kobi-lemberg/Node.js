@@ -42,6 +42,12 @@ app.config(['$routeProvider',function($routeProvider){
                 templateUrl: '/WebSite/Messages/Advertisement.html'
 
             })
+        .when('/Advertisement/CountScreensForMSG',
+            {
+                controller: 'AdvertisementController',
+                templateUrl: '/WebSite/Messages/CountScreensForMSG.html'
+
+            })
 
         .when('/About',
             {
