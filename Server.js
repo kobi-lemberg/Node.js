@@ -10,6 +10,8 @@ require('node-import');
 var express     = require('express');
 var bodyParser  = require('body-parser');
 var http        = require('http');
+var https = require('https'); //Https module of Node.js
+var FormData = require('form-data'); //Pretty multipart form maker.
 var path        = require('path');
 //var httpLoger = require('morgan');
 var fs          = require('fs');
@@ -57,6 +59,8 @@ var screensCollection   = 'screens';
 var url                 = 'mongodb://localhost:27017/'+DBName;
 var socketClientsArr    = [];
 
+
+
 var jsonToUpdate= {
     "screenArr":[4],
     "name":"Coca-Cola update",
@@ -71,7 +75,7 @@ var jsonToUpdate= {
         ],
     "imgs":["http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png","http://pngimg.com/upload/cocacola_PNG16.png"],
     "templateURL":"Coca-Cola",
-    "timeFrames":[{"startDate":"01/01/2015","endDate":"12/30/2016","daysArr":[0,1,2,3,4,5,6,7],"startTime":0,"endTime":23.59}],
+    "timeFrames":[{"startDate":"01/01/2015","endDate":"12/30/2016","daysArr":[0,1,2,3,4,5,6,],"startTime":0,"endTime":23.59}],
     "seconds":5
 };
 
@@ -125,7 +129,7 @@ mongodb.connect(url, function(err, db)
         var contentCollection = db.collection(msgsCollection);
         contentCollection.insert(jsonToUpdate,function(err)
         {
-            if (err) res.send(err);
+            if (err) res.send("Already updated");
             else
             {
                 for(var i=0;i<socketClientsArr.length;i++)
@@ -138,7 +142,11 @@ mongodb.connect(url, function(err, db)
                         var clientID = socketClientsArr[i].clientID;
                         contentCollection.find({screenArr: screenIDAsInt}).toArray(function(err, result)
                         {
-                            if (err) throw err;
+                            if (err)
+                            {
+                                res.send("Access Denied");
+                                throw err;
+                            }
                             else
                             {
                                 console.log("clientID as param: "+clientID);

@@ -42,7 +42,7 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
                 method: 'DELETE',
                 url: '/deleteScreen' +"=" + screenID
             }).then(function successCallback(response) {
-                //$scope.screens = response.data.JSON;
+                $scope.screens = response.data.JSON;
                 console.log("Delete: Screen with _id "+screenID+" - Success");
                 window.location.href = "/#/Screens";
 
@@ -75,6 +75,7 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
     $scope.getCreate = function(){
         window.location.href = "/#/Screens/createScreen";
     }
+
     /*Send create page params of new screen details to server*/
     $scope.createScreen = function(screenToCreate){
         $http({

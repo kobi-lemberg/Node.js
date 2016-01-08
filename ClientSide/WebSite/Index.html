@@ -27,9 +27,13 @@
     <script src="/WebSite/WebSiteJS/bootstrap.min.js"></script>
     <script src="/WebSite/WebSiteJS/d3pie.min.js"></script>
     <script src="/WebSite/WebSiteJS/angularRouter.js"></script>
+    <script src="/WebSite/Index/Search.controller.js"></script>
+    <script src="/WebSite/Home/Home.controller.js"></script>
+    <script src="/WebSite/Screens/SearchScreens.controller.js"></script>
+    <script src="/WebSite/Messages/SearchAdvertisement.controller.js"></script>
     <script src="/WebSite/Screens/Screens.controller.js"></script>
     <script src="/WebSite/Messages/Advertisement.controller.js"></script>
-    <script src="/WebSite/Home/Home.controller.js"></script>
+    <script src="/WebSite/About/About.controller.js"></script>
 
 <!--    &lt;!&ndash; bxSlider Javascript file &ndash;&gt;
     <script src="/js/jquery.bxslider.min.js"></script>
@@ -37,15 +41,6 @@
     <link href="/lib/jquery.bxslider.css" rel="stylesheet" />-->
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
-    <script>
-        function updateAbout() {
-            var id = $("#LatestQuestionID").val();
-            console.log(id);
-            $.get("http://localhost:8080/About" , {}, function (data, status) {
-                $("#mainContent").html(data).fadeOut(1).fadeIn(700);
-            });
-        };
-    </script>
 
 </head>
 <body ng-app="angularModule">
@@ -71,31 +66,6 @@
 </nav>
 <section id="intro">
     <!-- Introduction -->
-
-    <script>
-        $(document).ready(function () {
-            $("#PostQuestionForm").submit(function (event) {
-                event.preventDefault();
-
-                var $form = $(this),
-                        Text = $form.find("textarea").val(),
-                        url = "/Questions/CreateNewQuestion";
-
-                $("textarea").val(" ");
-                $("textarea").focus();
-
-                //console.log("Submitting Text: " + Text);
-
-                var posting = $.post(url, { "Text": Text });
-
-                posting.done(function (data) {
-                    //  console.log(data);
-                })
-            });
-        });
-
-
-    </script>
     <header>
         <a onclick="$('#intro').fadeOut(50); $('#content').attr('style', 'margin:30px 0 0 0;'); $('#submitQuestionButton').fadeIn(500);"><img src="https://cdn1.iconfinder.com/data/icons/nuove/128x128/actions/fileclose.png" alt="close" style="width: 35px; height: 35px;" /></a>
         <h2>Interactive screens</h2>
@@ -113,94 +83,46 @@
 <div id="content">
     <div id="mainContent" ng-view>
         <h3>Examples</h3>
-        <ul class="bxslider">
-            <li> h</li>
-            <li><img src="/images/pic2.jpg" /></li>
-            <li><img src="/images/pic3.jpg" /></li>
-            <li><img src="/images/pic4.jpg" /></li>
-        </ul>
     </div>
     <aside>
-        <script>
-            function upvote() {
-                var id = $("#LatestQuestionID").val();
-                console.log(id);
-                $.get('/Questions/Upvote?ID=' + id , {}, function (data, status) {
-                    updateQuestion();
-                })
-            };
+        <section id="search" class="search" ng-controller="SearchController">
+            <!--<form>
+                <ul>
+                    <li><img src='/Images=Kfar-Saba.png' style="max-width: 237px; " /></li>
+                </ul>
+            </form>
+            <div>
 
-            function updateQuestion() {
-                $.get('/Questions/GetLatestQuestion', {}, function (data, status) {
-                    // console.log(data);
-                    var prefix = "<strong>Question: </strong>";
-                    $('#latestQuestion').html(prefix + data.Text);
-                    $('#Votes').html(""+data.Votes+"");
-                    $('#LatestQuestionID').attr('value', data.ID);
-                });
-            }
-        </script>
-
-        <section id="search">
+            </div>
+            <div>
+                <img src='/Images=pesekzman.png' style="max-width: 250px; width:250px; padding: 10px;"/>
+            </div>-->
             <h3>Search Advertisement</h3>
-            <form action="/searchMsg" method="post">
+            <!--<form action="/searchMsg" method="post">-->
+            <form>
                 <span class="input_title">Name</span>
-                <input type="search" name="name" placeholder="Advertisement name"> <br />
+                <input type="search" name="name" placeholder="Advertisement name" id="searchAdvertisementByName" style="background-color: white !important;"> <br />
                 <span class="input_title">Text</span>
-                <input type="search" name="texts" placeholder="Text"> <br />
+                <input type="search" name="texts" placeholder="Text" id="searchAdvertisementByTexts"> <br />
                 <span class="input_title">Seconds duration</span>
-                <input type="search" name="seconds" placeholder="Seconds"> <br />
-                <input type="submit" class="btn btn-primary" value="Submit Search Query"/><br/>
-                <br></br>
+                <input type="search" name="seconds" placeholder="Seconds" id="searchAdvertisementBySeconds"> <br />
+                <input type="submit" class="btn btn-primary" id="searchAdvertisment" value="Submit Search Query" ng-click="searchAdvertisment();"/><br/>
+                <br>
             </form>
 
 
             <h3>Search Screen</h3>
-            <form action="/searchScreen" method="post">
+            <form>
                 <span class="input_title">City</span>
-                <input type="search" name="screenCity" placeholder="Screen City"> <br />
+                <input type="search" name="screenCity" placeholder="Screen City" id="searchScreenByscreenCity"> <br />
                 <span class="input_title">Street</span>
-                <input type="search" name="street" placeholder="Street"> <br />
+                <input type="search" name="street" placeholder="Street" id="searchScreenBystreet"> <br />
                 <span class="input_title">House Number</span>
-                <input type="search" name="houseNumber" placeholder="House number"> <br />
-                <input type="submit" class="btn btn-primary" value="Submit Search Query"/><br/>
+                <input type="search" name="houseNumber" placeholder="House number" id="searchScreenByhouseNumber"> <br />
+                <input type="submit" class="btn btn-primary" id="getSearchScreenParams" value="Submit Search Query" ng-click="getSearchScreenParams();"/><br/>
             </form>
 
         </section>
-
-
-
-
-        <script>
-
-            $(document).ready(function () {
-                console.log("ready!");
-
-            });
-            function searchAdvertisementByUser()
-            {
-                $("#PostQuestionForm").submit(function (event) {
-                    event.preventDefault();
-
-                    var $form = $(this),
-                            Text = $form.find("textarea").val(),
-                            url = "/Questions/CreateNewQuestion";
-
-                    $("textarea").val(" ");
-                    $("textarea").focus();
-
-                    //console.log("Submitting Text: " + Text);
-
-                    var posting = $.post(url, { "Text": Text });
-
-                    posting.done(function (data) {
-                        //  console.log(data);
-                    })
-                });
-            }
-        </script>
-
-
     </aside>
 
 </div>

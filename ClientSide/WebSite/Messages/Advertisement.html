@@ -7,13 +7,14 @@
             <table class="table">
                 <tr>
                     <th>
-                        <label class="col-md-2 control-label">City</label><input class="form-controll" ng-model="searchScreenCity"   name="screenCity" placeholder="City" />
+                        <input id="Seconds-Hidden" class="form-controll" ng-model="Seconds-Hidden"   name="Seconds-Hidden" placeholder="Seconds-Hidden" style="display: none;"/>
+                        <label class="col-md-2 control-label">Name</label><input class="form-controll" ng-model="searchAdvertismentName"   name="advertismentName" placeholder="Advertisment Name" />
                     </th>
                     <th>
-                        <label class="col-md-2 control-label">House</label><input class="form-controll" ng-model="searchScreenHouse"  type="number" name="screenCity" placeholder="House" />
+                        <label class="col-md-2 control-label">Text</label><input class="form-controll" ng-model="searchAdvertismentTexts"  name="advertismentTexts" placeholder="Text" />
                     </th>
                     <th>
-                        <label class="col-md-2 control-label">ZIP</label><input class="form-controll" ng-model="searchScreenZip"  type="number" name="screenCity" placeholder="ZIP" />
+                        <label class="col-md-2 control-label">Text</label><input class="form-controll" ng-model="searchAdvertismentText2"   name="advertismentText2" placeholder="Text" />
                     </th>
                 </tr>
                 <tr><td></td><td></td><td></td></tr>
@@ -25,39 +26,42 @@
         <tr>
             <th style="max-width: 100px !important; ">Screens</th>
             <th>Name</th>
-            <th>Texts</th>
+            <th style="max-width:265px !important;">Texts</th>
             <!--<th>Images</th>-->
 <!--            <th>Template</th>
             <th>Time Frames</th>-->
 <!--            <th>Seconds</th>-->
-            <th>Actions:</th>
+            <th>Seconds</th>
         </tr>
 
-        <tr ng-repeat ="advertisement in advertisements | filter:searchScreenCity  | filter:searchScreenHouse | filter:searchScreenZip">
+        <tr ng-repeat ="advertisement in advertisements | filter:searchAdvertismentName  | filter:searchAdvertismentTexts | filter:searchAdvertismentText2 | filter:Seconds-Hidden">
             <!--<td>{{advertisement.screenArr}}</td>-->
-            <td style="max-width: 100px !important;">
-                {{advertisement.screenArr}}
+
+            <td>
+                <div ng-repeat ="screen in advertisement.screenArr">{{screen}}</div>
             </td>
             <td>{{advertisement.name}}</td>
             <!--<td>{{advertisement.texts}}</td>-->
-            <td>
-                {{advertisement.texts}}
-
+            <td style="max-width:265px !important;">
+                <div ng-repeat ="text in advertisement.texts">{{text}}</div>
             </td>
             <!--<td>{{advertisement.imgs}}</td>-->
 <!--            <td>{{advertisement.templateURL}}</td>
             <td>{{advertisement.timeFrames}}</td>-->
-<!--            <td>{{advertisement.seconds}}</td>-->
-            <td>
+            <td>{{advertisement.seconds}}</td>
+<!--            <td>
                 <button class="btn btn-default" ng-click="getEdit(screen)">Edit</button>
                 <button class="btn btn-default" ng-click="deleteScreenByID(screen._id)">Delete</button>
-            </td>
+            </td>-->
         </tr>
-        <tr>
+<!--        <tr>
             <th><button class="btn btn-default" ng-click="getMessageDistribution()">Messages distribution</button></th>
             <th><button class="btn btn-default" ng-click="showScreenExample()">Screen example</button></th>
 
-        </tr>
+        </tr>-->
     </table>
+    <button class="btn" ng-click="getMessageDistribution()">Messages distribution</button></th>
+    <button class="btn" ng-click="showScreenExample()">Screen example</button></th>
+    <th><button class="btn" ng-click="useSocket()">Socket</button></th>
     </br>
 </div>
