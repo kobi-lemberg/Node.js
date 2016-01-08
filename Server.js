@@ -33,7 +33,7 @@ var cors   = require('cors');
 
 
 
-//var router = express.Router();
+
 
 var clientSidePath              = path.resolve('ClientSide');
 console.log("clientSidePath:"+clientSidePath);
@@ -42,7 +42,7 @@ console.log("clientSideScreenPath:"+clientSideScreenPath);
 var webSitePath                 = path.resolve('ClientSide/WebSite');
 console.log("webSitePath:"+webSitePath);
 
-//router.use(httpLoger());
+
 
 driver.use( cors({origin: 'http://localhost:8080'})     );
 driver.use( express.static(clientSidePath)              );
@@ -89,42 +89,33 @@ mongodb.connect(url, function(err, db)
 
 
 
-
+    /*GET: Interactive screens*/
     driver.get('/screen=:screenID', function (req, res) {
         res.sendFile(path.resolve("ClientSide/Screens/ClientPage.html"));
     });
 
-
+    /*GET: Send all CSS files*/
     driver.get('/css=:cssFile', function (req, res) {
         res.sendFile(path.resolve("ClientSide/Screens/ClientsCSSAndTemplates/CSS/"+req.params.cssFile));
     });
 
-
+    /*GET: Send all js files*/
     driver.get('/script=:scriptFile', function (req, res) {
         res.sendFile(path.resolve("ClientSide/Screens/"+req.params.scriptFile));
     });
 
-
-    driver.get('/About', function (req, res) {
-        addHeaders(res);
-        res.sendFile(path.resolve("ClientSide/Screens/AboutUs.html"));
-    });
-
-    //driver.use('/', router);
-    driver.get('/', function (req, res) {
-        res.sendFile(path.resolve("ClientSide/WebSite/Index.html"));
-    });
-
+    /*GET: Send all images*/
     driver.get('/Images=:image', function (req, res) {
         addHeaders(res);
         res.sendFile(path.resolve("ClientSide/WebSite/WebSiteContent/WebSiteImages/"+req.params.image));
     });
 
+    /*GET: Send main page*/
+    driver.get('/', function (req, res) {
+        res.sendFile(path.resolve("ClientSide/WebSite/Index.html"));
+    });
 
-
-
-
-
+    /*GET: Connect mongo, insert new advertisement for screen 4*/
     driver.get('/TestUpdate', function (req, res) {
         var contentCollection = db.collection(msgsCollection);
         contentCollection.insert(jsonToUpdate,function(err)
@@ -161,9 +152,7 @@ mongodb.connect(url, function(err, db)
         console.log(req.params.id);
     });
 
-
-
-
+    /*PUT: Insert new screen to mongoDB*/
     driver.put('/createNewScreen', function (req, res) {
 
         var contentCollection = db.collection(screensCollection);
@@ -185,8 +174,7 @@ mongodb.connect(url, function(err, db)
 
     });
 
-
-
+    /*DELETE: Remove screen by screenID from mongoDB and send update*/
     driver.delete('/deleteScreen=:screenNumber', function (req, res) {
 
         var contentCollection = db.collection(screensCollection);
@@ -194,16 +182,23 @@ mongodb.connect(url, function(err, db)
         contentCollection.remove( { screenNumber : parseInt(req.params.screenNumber) } ,function(err)
         {
             if (err) res.send('err');
-            else     res.send('Screen was deleted');
+            else
+            {
+                contentCollection.find({}).toArray(function(err, result)
+                {
+                    if (err) throw err;
+                    else res.send({JSON : result});
+                });
+                //res.send('Screen was deleted');
+            }
+
 
         });
 
 
     });
 
-
-
-//update screen details
+    /*POST: Update/Set in mongoDB screen parameters by screenNumber*/
     driver.post('/screen', function (req, res) {
         var contentCollection = db.collection(screensCollection);
         var screenJson = {
@@ -224,11 +219,7 @@ mongodb.connect(url, function(err, db)
 
     });
 
-
-
-
-
-
+    /*POST: Search messages by text, name and seconds*/
     driver.post('/searchMsg', function (req, res) {
 
         var searchQuery = {};
@@ -252,8 +243,7 @@ mongodb.connect(url, function(err, db)
 
     });
 
-
-
+    /*POST: Search screen by screenCity, street and houseNumber*/
     driver.post('/searchScreen', function (req, res) {
 
         var searchQuery = {};
@@ -277,10 +267,7 @@ mongodb.connect(url, function(err, db)
 
     });
 
-
-
-
-
+    /*GET: return JSON with amount of screenArr objects for all messages*/
     driver.get('/screenCountForMsg', function (req, res) {
 
         console.log("Get screen count for each msg");
@@ -301,10 +288,7 @@ mongodb.connect(url, function(err, db)
 
     });
 
-
-
-
-
+    /*GET: Group by quey: group screenCity by number of appearence || For each screenCity count her appearence*/
     driver.get('/screensInCity', function (req, res) {
         console.log("Get groupby query - screen by city")
         var contentCollection = db.collection(screensCollection);
@@ -322,7 +306,7 @@ mongodb.connect(url, function(err, db)
     });
 
 
-
+    /*GET: Return all screens*/
     driver.get('/screensJSON', function (req, res) {
 
         var contentCollection = db.collection(screensCollection);
@@ -333,6 +317,7 @@ mongodb.connect(url, function(err, db)
         });
     });
 
+    /*GET: Return all advertisement(msgs)*/
     driver.get('/advertisementJSON', function (req, res) {
 
         var contentCollection = db.collection(msgsCollection);
@@ -343,10 +328,11 @@ mongodb.connect(url, function(err, db)
         });
     });
 
-
-
+    /*IO.sockets*/
     io.sockets.on("connection",function(client){
         console.log("New Connection");
+
+        /*When client emit "getJsonFromServer we save his screen details in a special array - socketClientsArr" and triggering client with "pushJsonToClient" and send to him the JSON*/
        client.on("getJsonFromServer",function(data){
           console.log("client:  "+client+"\ndata:  "+data+"   client id: "+client.id);
            socketClientsArr.push({
@@ -360,11 +346,9 @@ mongodb.connect(url, function(err, db)
                if (err) throw err;
                else client.emit("pushJsonToClient",JSON.stringify(result));
            });
-
        });
 
-
-        /* Update the client  */
+        /*When server triggered this event, we will send to him his screensJSON*/
         client.on("pushUpdatesJsonToClient",function(data){
             console.log("client:  "+client+"\ndata:  "+data+"   client id: "+client.id);
             socketClientsArr.push({
@@ -381,8 +365,7 @@ mongodb.connect(url, function(err, db)
 
         });
 
-
-
+        /*When the sever got this event we will find the client in socketClientsArr in order to remove*/
         client.on('disconnect', function () {
             console.log("Client Array size is: "+socketClientsArr.length);
             console.log("client:  "+client+ "client.id:  "+client.id);
@@ -401,9 +384,7 @@ mongodb.connect(url, function(err, db)
 
 
         });
-
-
-
+    /*End of sockets*/
     });
     server.listen(8080, function ()
     {

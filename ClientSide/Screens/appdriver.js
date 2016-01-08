@@ -71,18 +71,6 @@ var loadCSS = function(href) {
     $("head").html(cssLink);
 };
 
-/**
- * function to load a given Screens file
- * href represent the css file name without extension!!
- */
-var loadHTML = function(href) {
-    $.get('http://127.0.0.1:8080/'+href, {
-    }, function (data)
-    {
-        $("body").append(data);
-    });
-};
-
 
 
 /**
@@ -90,6 +78,7 @@ var loadHTML = function(href) {
  * @param dataAsObject represent a JSON object of all msgs
  * @param index represent the first msg to display
  * @param screenID represent the id of the client screen.
+ * @param onFirstTime represent a flag if its an update or first time
  */
 var buildMsgsAndStartApp = function(dataAsObject,index,screenID,onFirstTime)
 {//Parsing the object and build an array of msgs/advertisement to display

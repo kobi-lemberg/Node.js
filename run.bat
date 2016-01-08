@@ -1,7 +1,7 @@
 
 
 rem ##############################################################
-	rem # Set this value in order to run
+	rem # Set this values in order to run
 	rem ##############################################################
 
 set date=Date_1112
@@ -21,9 +21,11 @@ ping -n 8 127.0.0.1 >nul
 "%mongoPath%\mongoimport" -d advertisment -c msgs %cd%\Advertisment.JSON --jsonArray
 ping -n 8 127.0.0.1 >nul
 
+"%mongoPath%\mongoimport" -d screens -c msgs %cd%\Screens.JSON --jsonArray
+ping -n 8 127.0.0.1 >nul
 
 start cmd /k node Server.js
 ping -n 8 127.0.0.1 >nul
 
-start chrome.exe --allow-file-access-from-files http://localhost:8080/screen=4
+start chrome.exe --allow-file-access-from-files http://localhost:8080
 pause

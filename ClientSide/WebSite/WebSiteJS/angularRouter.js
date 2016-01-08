@@ -1,8 +1,8 @@
 'use strict'             //module
-var app = angular.module('angularModule', ['ngRoute','aboutangularModule','homeangularModule','searchangularModule']);
+var app = angular.module('angularModule', ['ngRoute','aboutangularModule','homeangularModule']);
 var about = angular.module('aboutangularModule', ['ngRoute']);
 var home = angular.module('homeangularModule', ['ngRoute']);
-var search = angular.module('searchangularModule', ['ngRoute']);
+
 
 app.config(['$routeProvider',function($routeProvider){
     $routeProvider
@@ -10,72 +10,59 @@ app.config(['$routeProvider',function($routeProvider){
             {
                 controller: 'HomeController',
                 templateUrl: '/WebSite/Home/Home.html'
-
             })
         .when('/Screens',
             {
                 controller: 'ScreensController',
                 templateUrl: '/WebSite/Screens/Screens.html'
-
             })
         .when('/Screens/editScreen',
             {
                 controller: 'ScreensController',
                 templateUrl: '/WebSite/Screens/editScreen.html'
-
             })
         .when('/Screens/createScreen',
             {
                 controller: 'ScreensController',
                 templateUrl: '/WebSite/Screens/createScreen.html'
-
             })
         .when('/Screens/SearchScreens',
             {
                 controller: 'SearchScreensController',
                 templateUrl: '/WebSite/Screens/SearchScreens.html'
-
             })
         .when('/Advertisement',
             {
                 controller: 'AdvertisementController',
                 templateUrl: '/WebSite/Messages/Advertisement.html'
-
             })
         .when('/Advertisement/CountScreensForMSG',
             {
                 controller: 'AdvertisementController',
                 templateUrl: '/WebSite/Messages/CountScreensForMSG.html'
-
             })
         .when('/Advertisement/SearchAdvertisement',
             {
                 controller: 'SearchAdvertisementController',
                 templateUrl: '/WebSite/Messages/SearchAdvertisement.html'
-
             })
 
         .when('/About',
             {
                 controller: 'AboutController',
                 templateUrl: '/WebSite/About/AboutUs.html'
-
             })
         .when('/Screens/GroupScreensByCity',
             {
                 controller: 'ScreensController',
                 templateUrl: '/WebSite/Screens/GroupScreensByCity.html'
-
             })
         .when('/#/GroupScreensByCity',
             {
                 controller: 'ScreensController',
                 templateUrl: '/WebSite/Screens/GroupScreensByCity.html'
-
             })
         .otherwise({redirectTo:'/'});
-
-
 }]);
 
 
@@ -99,24 +86,7 @@ app.service('MyService', function() {
         console.log(seconds);
         console.log("Post data="+postData);
         window.location.href = "/#/Advertisement/SearchAdvertisement";
-
-
-
-
-    /*    $.post('/searchMsg',postData,function(data){
-            console.log(data);
-            $("#searchAdvertisementByName").val("");
-            $("#searchAdvertisementByTexts").val("");
-            $("#searchAdvertisementBySeconds").val("");
-           // window.location.href = "http://localhost:8080/#/Advertisment/";
-           // $("#Seconds-Hidden").val(seconds*1);
-
-
-
-        });*/
     }
-
-
 
 
     this.getSearchScreenParams = function(){
@@ -137,19 +107,6 @@ app.service('MyService', function() {
         console.log(houseNumber);
         console.log("Post data="+postData);
         window.location.href = "/#/Screens/SearchScreens";
-/*        $.post('/searchScreen',postData,function(data){
-            console.log(data);
-
-
-            $("#searchScreenByscreenCity").val("");
-            $("#searchScreenBystreet").val("");
-            $("#searchScreenByhouseNumber").val("");
-            window.location.href = "/#/Screens/";
-            $(t+" #HouseHidden").val(houseNumber);
-
-
-        });*!/
- */
     }
 
 

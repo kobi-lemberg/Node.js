@@ -42,9 +42,10 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
                 method: 'DELETE',
                 url: '/deleteScreen' +"=" + screenID
             }).then(function successCallback(response) {
-                $scope.screens = response.data.JSON;
                 console.log("Delete: Screen with _id "+screenID+" - Success");
-                window.location.href = "/#/Screens";
+                console.log(response.data);
+                $scope.screens = response.data.JSON;
+                //window.location.href = "/#/Screens";
 
             }, function errorCallback(response) {
                 console.log("Delete: Screen with _id "+screenID+" - Error");

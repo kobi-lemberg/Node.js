@@ -53,16 +53,6 @@
 		,"seconds":5
 	},
 	{
-		"_id":"566ae36d7fc297d765e5f420",
-		"screenArr":[1,4],
-		"name":"msg4",
-		"texts":["Message4 - text field 1","Message4 - text field 2"],
-		"imgs":[""],
-		"templateURL":"Kfar-Saba2",
-		"timeFrames":[{"startDate":"01/01/2015","endDate":"12/30/2016","daysArr":[0,1,2,3,4,5,6,7],"startTime":0,"endTime":23.59}],
-		"seconds":5
-	},
-	{
 		"_id":"566ae36d7fc297d765e5f421",
 		"screenArr":[3,4],
 		"name":"Coca-Cola msg5",

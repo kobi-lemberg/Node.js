@@ -2,7 +2,7 @@ angular.module('angularModule').controller('SearchController',function($rootScop
 console.log("Search controller is up");
 
 
-    /*Render edit page with specific screen details to update*/
+    /*Adapter functions with MyService for  search bar*/
     $scope.searchAdvertisment = function() {
         console.log("Search controller - searchAdvertisment");
         MyService.searchAdvertisment();
