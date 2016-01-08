@@ -1,0 +1,59 @@
+
+<h2>Analytics.</h2>
+<section id="comments">
+    <h3>Our Screen deployment</h3>
+    <div id="map">
+        <p style="display: none;">{{screensForGoogleMaps}}</p>
+    </div>
+    <script>
+
+        function initMap() {
+            var scope = angular.element(document.querySelector('#map')).scope();
+            var t  = scope.screensForGoogleMaps;
+            console.log("t:"+t);
+            var myLatLng = { lat: 32.0852999, lng: 34.78176759999997 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 9,
+                center: myLatLng
+            });
+            var geocoder = new google.maps.Geocoder();
+                for (var k in t) {
+                    console.log("t[k]:"+t[k]);
+                    console.log("t[k].screenCity:"+t[k].screenCity);
+                    geocoder.geocode({ 'address': t[k].screenCity }, function (results, status) {
+
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            console.log("OK!");
+                            var latitude = results[0].geometry.location.lat();
+                            var longitude = results[0].geometry.location.lng();
+                        }
+                        var myLatLng2 = { lat: latitude, lng: longitude };
+                        var marker = new google.maps.Marker({
+                            position: myLatLng2,
+                            map: map,
+                            title: 'Screen deployment'
+                        });
+                    });
+                }
+        }
+        var TOMAP =setTimeout(function() {
+            initMap();
+        },100);
+
+    </script>
+    <style>
+        #map {
+            border-radius: 10px;
+            height: 250px;
+            width: 588px;
+            background-color: #efefef;
+            margin-bottom: 10px;
+        }
+    </style>
+</section>
+
+<section id="comments2">
+    <h3>Post us on Facebook</h3>
+    <input type="search" name="fbp" placeholder="Write here your post!" id="facebookPost" style="max-width:588px!important; width: 588px!important; max-height:200px!important; height: 200px;      -webkit-border-radius: 22px;"> <br />
+
+</section>

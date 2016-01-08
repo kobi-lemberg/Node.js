@@ -15,6 +15,7 @@
     <link rel='stylesheet' type='text/css' href="/WebSiteCSS/Style.css">"
 
     <!--JS declaration-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
@@ -22,7 +23,7 @@
     <script src="http://code.angularjs.org/1.2.0/angular-route.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-
+    <script src="/WebSite/Analytics/Analytics.controller.js"></script>
     <script src="/WebSite/WebSiteJS/bootstrap.js"></script>
     <script src="/WebSite/WebSiteJS/bootstrap.min.js"></script>
     <script src="/WebSite/WebSiteJS/d3pie.min.js"></script>
@@ -40,7 +41,7 @@
     &lt;!&ndash; bxSlider CSS file &ndash;&gt;
     <link href="/lib/jquery.bxslider.css" rel="stylesheet" />-->
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
+
 
 </head>
 <body ng-app="angularModule">
@@ -56,7 +57,7 @@
 
         <li class="subscribe">
             <div id="transDemo2">
-                <a href="/Fans/Analytics" class="rsstext">Analytics<div class="hover"><img src="http://onecloudnetworks.com/wp-content/uploads/2015/01/operational-analytics-icon-sky.png" width="25" height="25"></div></a>
+                <a href="/#/Analytics" class="rsstext">Analytics<div class="hover"><img src="http://onecloudnetworks.com/wp-content/uploads/2015/01/operational-analytics-icon-sky.png" width="25" height="25"></div></a>
             </div>
         </li>
 
@@ -86,19 +87,7 @@
     </div>
     <aside>
         <section id="search" class="search" ng-controller="SearchController">
-            <!--<form>
-                <ul>
-                    <li><img src='/Images=Kfar-Saba.png' style="max-width: 237px; " /></li>
-                </ul>
-            </form>
-            <div>
-
-            </div>
-            <div>
-                <img src='/Images=pesekzman.png' style="max-width: 250px; width:250px; padding: 10px;"/>
-            </div>-->
             <h3>Search Advertisement</h3>
-            <!--<form action="/searchMsg" method="post">-->
             <form>
                 <span class="input_title">Name</span>
                 <input type="search" name="name" placeholder="Advertisement name" id="searchAdvertisementByName" style="background-color: white !important;"> <br />

@@ -57,10 +57,10 @@ app.config(['$routeProvider',function($routeProvider){
                 controller: 'ScreensController',
                 templateUrl: '/WebSite/Screens/GroupScreensByCity.html'
             })
-        .when('/#/GroupScreensByCity',
+        .when('/Analytics',
             {
-                controller: 'ScreensController',
-                templateUrl: '/WebSite/Screens/GroupScreensByCity.html'
+                controller: 'AnalyticsController',
+                templateUrl: '/WebSite/Analytics/Analytics.html'
             })
         .otherwise({redirectTo:'/'});
 }]);

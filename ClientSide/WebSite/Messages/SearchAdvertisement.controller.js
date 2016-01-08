@@ -1,6 +1,6 @@
 angular.module('angularModule').controller('SearchAdvertisementController',function($rootScope,$scope,$http, $route, $routeParams,MyService) {
-    var groupScreensByCityFromController;
-    /*Retreive all screens from node.js server*/
+
+    /*Post the serach data and set the page params for display*/
     console.log("SearchAdvertisementController");
     console.log("dataToSend"+JSON.stringify(MyService.dataToSendToServer));
     $http({

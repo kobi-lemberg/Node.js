@@ -18,7 +18,7 @@ angular.module('angularModule').controller('AdvertisementController',function($r
     }
 
 
-    /*Render edit page with specific screen details to update*/
+    /*Send get request for updating screen 4*/
     $scope.useSocket = function(){
         $http({
             method: 'GET',
@@ -32,7 +32,7 @@ angular.module('angularModule').controller('AdvertisementController',function($r
     }
 
 
-    /*Group screen by their city - GroupBY query*/
+    /*Count the amount of screens for each advertisement*/
     $scope.getMessageDistribution = function(){
 
         $http({
