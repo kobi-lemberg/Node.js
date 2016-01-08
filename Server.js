@@ -10,8 +10,8 @@ require('node-import');
 var express     = require('express');
 var bodyParser  = require('body-parser');
 var http        = require('http');
-var https = require('https'); //Https module of Node.js
-var FormData = require('form-data'); //Pretty multipart form maker.
+var https       = require('https'); //Https module of Node.js
+var FormData    = require('form-data'); //Pretty multipart form maker.
 var path        = require('path');
 //var httpLoger = require('morgan');
 var fs          = require('fs');
@@ -54,10 +54,11 @@ driver.use( bodyParser.json()                           );    // to support JSON
 driver.use( bodyParser.urlencoded( { extended: true } ) );    // to support URL-encoded bodies
 
 var DBName              = 'advertisment';
-var msgsCollection        = 'msgs';
+var msgsCollection      = 'msgs';
 var screensCollection   = 'screens';
 var url                 = 'mongodb://localhost:27017/'+DBName;
 var socketClientsArr    = [];
+var ACCESS_TOKEN        = "CAAPYa3UjCo4BAMhdB1xmONZB3UPSCK8NDyfQQGqJKX6js1sPRG2I0pXOaGQlkcIVAaDPHeGa9pgAKGQznGUdt7ZCRjKiFAP98Hn9stpcZCJ03xRwvAWCHc6wYu22n0g8OArW69nv6ikTjj5zvZCybEQmbRFRsAUMP7CWheOw8uNqsmmhhOzrGhCPzscGMkQZD";
 
 
 
@@ -267,6 +268,41 @@ mongodb.connect(url, function(err, db)
 
     });
 
+
+
+
+    /*POST: Post msg to Facebook*/
+    driver.post('/postOnFacebook', function (req, res) {
+
+
+        var form = new FormData(); //Create multipart form
+        form.append('message', "This is a fourth message from nodejs"); //Put message
+
+        var options = {
+            method: 'post',
+            host: 'graph.facebook.com',
+            path: 'feed?access_token='+ACCESS_TOKEN,
+            headers: form.getHeaders()
+        }
+
+        //Do POST request, callback for response
+        var request = https.request(options, function (facebookRes){
+            //console.log(facebookRes);
+            res.send('ok!')
+
+        });
+
+        //Binds form to request
+        form.pipe(request);
+
+        //If anything goes wrong (request-wise not FB)
+        request.on('error', function (error) {
+            console.log(error);
+        });
+
+    });
+
+
     /*GET: return JSON with amount of screenArr objects for all messages*/
     driver.get('/screenCountForMsg', function (req, res) {
 
@@ -287,6 +323,9 @@ mongodb.connect(url, function(err, db)
         });
 
     });
+
+
+
 
     /*GET: Group by quey: group screenCity by number of appearence || For each screenCity count her appearence*/
     driver.get('/screensInCity', function (req, res) {
