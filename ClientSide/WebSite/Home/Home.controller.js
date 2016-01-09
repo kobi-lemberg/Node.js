@@ -1,6 +1,7 @@
 angular.module('homeangularModule').controller('HomeController',function($rootScope,$scope,$http, $route, $routeParams) {
 
     /*Retreive all screens from node.js server for googelMaps*/
+/*
     $http({
         method: 'GET',
         url: '/screensJSON'
@@ -10,5 +11,6 @@ angular.module('homeangularModule').controller('HomeController',function($rootSc
     }, function errorCallback(response) {
         console.log("error with  get screensJSON");
     });
+*/
 
 });

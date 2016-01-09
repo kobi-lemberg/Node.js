@@ -15,6 +15,7 @@
     <link rel='stylesheet' type='text/css' href="/WebSiteCSS/Style.css">"
 
     <!--JS declaration-->
+
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -23,11 +24,11 @@
     <script src="http://code.angularjs.org/1.2.0/angular-route.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="/WebSite/Analytics/Analytics.controller.js"></script>
+    <script src="/WebSite/WebSiteJS/angularRouter.js"></script>
     <script src="/WebSite/WebSiteJS/bootstrap.js"></script>
     <script src="/WebSite/WebSiteJS/bootstrap.min.js"></script>
     <script src="/WebSite/WebSiteJS/d3pie.min.js"></script>
-    <script src="/WebSite/WebSiteJS/angularRouter.js"></script>
+    <script src="/WebSite/Analytics/Analytics.controller.js"></script>
     <script src="/WebSite/Index/Search.controller.js"></script>
     <script src="/WebSite/Home/Home.controller.js"></script>
     <script src="/WebSite/Screens/SearchScreens.controller.js"></script>
@@ -36,15 +37,9 @@
     <script src="/WebSite/Messages/Advertisement.controller.js"></script>
     <script src="/WebSite/About/About.controller.js"></script>
 
-<!--    &lt;!&ndash; bxSlider Javascript file &ndash;&gt;
-    <script src="/js/jquery.bxslider.min.js"></script>
-    &lt;!&ndash; bxSlider CSS file &ndash;&gt;
-    <link href="/lib/jquery.bxslider.css" rel="stylesheet" />-->
-
-
-
 </head>
 <body ng-app="angularModule">
+
 
 <nav>
     <!-- Navigation -->
@@ -60,9 +55,7 @@
                 <a href="/#/Analytics" class="rsstext">Analytics<div class="hover"><img src="http://onecloudnetworks.com/wp-content/uploads/2015/01/operational-analytics-icon-sky.png" width="25" height="25"></div></a>
             </div>
         </li>
-
         <li><a href="/#/About">About us</a></li>
-
     </ul>
 </nav>
 <section id="intro">
@@ -70,14 +63,8 @@
     <header>
         <a onclick="$('#intro').fadeOut(50); $('#content').attr('style', 'margin:30px 0 0 0;'); $('#submitQuestionButton').fadeIn(500);"><img src="https://cdn1.iconfinder.com/data/icons/nuove/128x128/actions/fileclose.png" alt="close" style="width: 35px; height: 35px;" /></a>
         <h2>Interactive screens</h2>
-        <div id="AskMe">
-
-        </div>
-
     </header>
     <p>Interactive screens Admin panel<br/>This page allow you to manage your application</p>
-
-
 
 </section>
 

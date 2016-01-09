@@ -7,7 +7,6 @@
             <table class="table">
                 <tr>
                     <th>
-                        <input id="Seconds-Hidden" class="form-controll" ng-model="Seconds-Hidden"   name="Seconds-Hidden" placeholder="Seconds-Hidden" style="display: none;"/>
                         <label class="col-md-2 control-label">Name</label><input class="form-controll" ng-model="searchAdvertismentName"   name="advertismentName" placeholder="Advertisment Name" />
                     </th>
                     <th>
@@ -34,7 +33,7 @@
             <th>Seconds</th>
         </tr>
 
-        <tr ng-repeat ="advertisement in advertisements | filter:searchAdvertismentName  | filter:searchAdvertismentTexts | filter:searchAdvertismentText2 | filter:Seconds-Hidden">
+        <tr ng-repeat ="advertisement in advertisements | filter:searchAdvertismentName  | filter:searchAdvertismentTexts | filter:searchAdvertismentText2">
             <!--<td>{{advertisement.screenArr}}</td>-->
 
             <td>
