@@ -15,6 +15,8 @@
     <link rel='stylesheet' type='text/css' href="/WebSiteCSS/Style.css">"
 
     <!--JS declaration-->
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
@@ -22,31 +24,22 @@
     <script src="http://code.angularjs.org/1.2.0/angular-route.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
-
+    <script src="/WebSite/WebSiteJS/angularRouter.js"></script>
     <script src="/WebSite/WebSiteJS/bootstrap.js"></script>
     <script src="/WebSite/WebSiteJS/bootstrap.min.js"></script>
     <script src="/WebSite/WebSiteJS/d3pie.min.js"></script>
-    <script src="/WebSite/WebSiteJS/angularRouter.js"></script>
+    <script src="/WebSite/Analytics/Analytics.controller.js"></script>
+    <script src="/WebSite/Index/Search.controller.js"></script>
+    <script src="/WebSite/Home/Home.controller.js"></script>
+    <script src="/WebSite/Screens/SearchScreens.controller.js"></script>
+    <script src="/WebSite/Messages/SearchAdvertisement.controller.js"></script>
     <script src="/WebSite/Screens/Screens.controller.js"></script>
-
-<!--    &lt;!&ndash; bxSlider Javascript file &ndash;&gt;
-    <script src="/js/jquery.bxslider.min.js"></script>
-    &lt;!&ndash; bxSlider CSS file &ndash;&gt;
-    <link href="/lib/jquery.bxslider.css" rel="stylesheet" />-->
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDT_uUbkFaI0W2YR0A5spqgVAbnl6aNHjs&signed_in=true&callback=initMap"></script>
-    <script>
-        function updateAbout() {
-            var id = $("#LatestQuestionID").val();
-            console.log(id);
-            $.get("http://localhost:8080/About" , {}, function (data, status) {
-                $("#mainContent").html(data).fadeOut(1).fadeIn(700);
-            });
-        };
-    </script>
+    <script src="/WebSite/Messages/Advertisement.controller.js"></script>
+    <script src="/WebSite/About/About.controller.js"></script>
 
 </head>
 <body ng-app="angularModule">
+
 
 <nav>
     <!-- Navigation -->
@@ -59,180 +52,53 @@
 
         <li class="subscribe">
             <div id="transDemo2">
-                <a href="/Fans/Analytics" class="rsstext">Analytics<div class="hover"><img src="http://onecloudnetworks.com/wp-content/uploads/2015/01/operational-analytics-icon-sky.png" width="25" height="25"></div></a>
+                <a href="/#/Analytics" class="rsstext">Analytics<div class="hover"><img src="http://onecloudnetworks.com/wp-content/uploads/2015/01/operational-analytics-icon-sky.png" width="25" height="25"></div></a>
             </div>
         </li>
-
         <li><a href="/#/About">About us</a></li>
-
     </ul>
 </nav>
 <section id="intro">
     <!-- Introduction -->
-
-    <script>
-        $(document).ready(function () {
-            $("#PostQuestionForm").submit(function (event) {
-                event.preventDefault();
-
-                var $form = $(this),
-                        Text = $form.find("textarea").val(),
-                        url = "/Questions/CreateNewQuestion";
-
-                $("textarea").val(" ");
-                $("textarea").focus();
-
-                //console.log("Submitting Text: " + Text);
-
-                var posting = $.post(url, { "Text": Text });
-
-                posting.done(function (data) {
-                    //  console.log(data);
-                })
-            });
-        });
-
-
-    </script>
     <header>
         <a onclick="$('#intro').fadeOut(50); $('#content').attr('style', 'margin:30px 0 0 0;'); $('#submitQuestionButton').fadeIn(500);"><img src="https://cdn1.iconfinder.com/data/icons/nuove/128x128/actions/fileclose.png" alt="close" style="width: 35px; height: 35px;" /></a>
         <h2>Interactive screens</h2>
-        <div id="AskMe">
-            <form id="PostQuestionForm" method="POST">
-                <textarea name="Text" placeholder="Ask me anything!"></textarea>
-                <button id="submitQuestion" class="btn">Submit Question</button>
-            </form>
-        </div>
-
     </header>
     <p>Interactive screens Admin panel<br/>This page allow you to manage your application</p>
-
-
 
 </section>
 
 <div id="content">
     <div id="mainContent" ng-view>
         <h3>Examples</h3>
-        <ul class="bxslider">
-            <li> h</li>
-            <li><img src="/images/pic2.jpg" /></li>
-            <li><img src="/images/pic3.jpg" /></li>
-            <li><img src="/images/pic4.jpg" /></li>
-        </ul>
     </div>
     <aside>
-        <script>
-            function upvote() {
-                var id = $("#LatestQuestionID").val();
-                console.log(id);
-                $.get('/Questions/Upvote?ID=' + id , {}, function (data, status) {
-                    updateQuestion();
-                })
-            };
-
-            function updateQuestion() {
-                $.get('/Questions/GetLatestQuestion', {}, function (data, status) {
-                    // console.log(data);
-                    var prefix = "<strong>Question: </strong>";
-                    $('#latestQuestion').html(prefix + data.Text);
-                    $('#Votes').html(""+data.Votes+"");
-                    $('#LatestQuestionID').attr('value', data.ID);
-                });
-            }
-        </script>
-
-        <section id="search">
-            <h3>Search Message</h3>
-            <form action="/Blog/Search" method="get">
-                <span class="input_title">From Date</span>
-                <input type="date" name="datefrom" /> <br /><span class="input_title">Until Date</span>
-                <input type="date" name="dateto" /> <br />
-
-                <span class="input_title">Client</span>
-                <input name="author" type="search" placeholder="Client" />
-
-                <br />
-                <span class="input_title">Texts</span>
-
-                <input type="search" name="title" placeholder="Texts"><br />
-                <br />
-
-                <h3>Number of advertisment per screen</h3>
-                <span class="input_title">Screen</span>
-                <input type="number" name="commentswords" placeholder="Screen ID" />
-
-                <br />
-                <span class="input_title">Number of advertisment</span>
-                <input type="range" name="comments" min="0" max="10" value="0" />
+        <section id="search" class="search" ng-controller="SearchController">
+            <h3>Search Advertisement</h3>
+            <form>
+                <span class="input_title">Name</span>
+                <input type="search" name="name" placeholder="Advertisement name" id="searchAdvertisementByName" style="background-color: white !important;"> <br />
+                <span class="input_title">Text</span>
+                <input type="search" name="texts" placeholder="Text" id="searchAdvertisementByTexts"> <br />
+                <span class="input_title">Seconds duration</span>
+                <input type="search" name="seconds" placeholder="Seconds" id="searchAdvertisementBySeconds"> <br />
+                <input type="submit" class="btn btn-primary" id="searchAdvertisment" value="Submit Search Query" ng-click="searchAdvertisment();"/><br/>
+                <br>
+            </form>
 
 
-                <input type="submit" class="btn btn-primary" value="Submit Search Query" />
+            <h3>Search Screen</h3>
+            <form>
+                <span class="input_title">City</span>
+                <input type="search" name="screenCity" placeholder="Screen City" id="searchScreenByscreenCity"> <br />
+                <span class="input_title">Street</span>
+                <input type="search" name="street" placeholder="Street" id="searchScreenBystreet"> <br />
+                <span class="input_title">House Number</span>
+                <input type="search" name="houseNumber" placeholder="House number" id="searchScreenByhouseNumber"> <br />
+                <input type="submit" class="btn btn-primary" id="getSearchScreenParams" value="Submit Search Query" ng-click="getSearchScreenParams();"/><br/>
             </form>
 
         </section>
-
-
-
-
-        <script>
-
-            $(document).ready(function () {
-                console.log("ready!");
-
-            });
-
-            function FindShop() {
-                var geocoder = new google.maps.Geocoder();
-                var myAddress = $('#myAddress').val();
-
-                geocoder.geocode({ 'address': myAddress }, function (results, status) {
-                    // console.log(results);
-
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        var myX = results[0].geometry.location.lat();
-                        var myY = results[0].geometry.location.lng();
-                    }
-
-                    $.get('/Shop/GetShops', {}, function (data, status) {
-                        var bestShop = "No Shop";
-                        var bestDistance = 11000;
-                        $(data).each(function (i,shop) {
-                            geocoder.geocode({ 'address': shop.Address }, function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    var latitude = results[0].geometry.location.lat();
-                                    var longitude = results[0].geometry.location.lng();
-                                    var distance = Math.abs(latitude - myX) + Math.abs(longitude - myY);
-
-                                    if (distance < bestDistance) {
-                                        bestDistance = distance;
-                                        bestShop = shop.Address;
-                                        $("#bestShop").html("The Best shop for you is: <br /><strong>" + bestShop + "</strong>");
-                                    }
-                                }
-                            });
-                        });
-                    })
-
-                })
-            }
-
-
-
-        </script>
-
-        <section id="locateShop">
-            <header>
-                <h3>Find Closest Screen</h3>
-            </header>
-            <span id="bestShop"><br /> Enter wanted location:</span>
-            <input type="search" id="myAddress" style="width: 252px; margin-bottom:10px; text-align: center;" />
-            <br />
-
-            <input type="submit" onclick="FindShop();" class="btn btn-primary" style="background-color: #428BCA; color: #fff;" value="Find Closest Screen" /> <a style="margin-left: 5px;"href="/Shop/">Go to Price List</a>
-
-        </section>
-
     </aside>
 
 </div>
@@ -274,9 +140,6 @@
 
     </div>
 </footer>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
 </body>
 </html>
 

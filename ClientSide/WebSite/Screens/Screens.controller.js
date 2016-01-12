@@ -25,11 +25,12 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
     $scope.updateScreen = function(screen){
         console.log("Update:"+screen);
         $http({
-            method: 'PUT',
+            method: 'POST',
             url: '/screen',
             data: screen
         }).then(function successCallback(response) {
             console.log("Update:"+screen+" - Success");
+            window.location.href = "/#/Screens";
         }, function errorCallback(response) {
             console.log("Update:"+screen+" - ERROR");
         });
@@ -41,8 +42,11 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
                 method: 'DELETE',
                 url: '/deleteScreen' +"=" + screenID
             }).then(function successCallback(response) {
-                $scope.screens = response.data.JSON;
                 console.log("Delete: Screen with _id "+screenID+" - Success");
+                console.log(response.data);
+                $scope.screens = response.data.JSON;
+                //window.location.href = "/#/Screens";
+
             }, function errorCallback(response) {
                 console.log("Delete: Screen with _id "+screenID+" - Error");
             });
@@ -72,10 +76,11 @@ angular.module('angularModule').controller('ScreensController',function($rootSco
     $scope.getCreate = function(){
         window.location.href = "/#/Screens/createScreen";
     }
+
     /*Send create page params of new screen details to server*/
     $scope.createScreen = function(screenToCreate){
         $http({
-            method: 'POST',
+            method: 'PUT',
             url: '/createNewScreen',
             data: screenToCreate
         }).then(function successCallback(response) {

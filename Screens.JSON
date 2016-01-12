@@ -1,0 +1,44 @@
+[
+	{
+		"screenNumber" : 1,
+		"screenCity" : "Rishon Lezion",
+		"street" : "Rotchild",
+		"houseNumber" : 15,
+		"zip" : 8888
+	},
+	{
+		"screenNumber" : 2,
+		"screenCity" : "Tel Aviv",
+		"street" : "Arlozorov",
+		"houseNumber" : 16,
+		"zip" : 6666
+	},
+	{
+		"screenNumber" : 3,
+		"screenCity" : "Kfar Saba",
+		"street" : "Habonim",
+		"houseNumber" : 17,
+		"zip" : 7777
+	},
+	{
+		"screenNumber" : 4,
+		"screenCity" : "Bat Yam",
+		"street" : "Yarkon",
+		"houseNumber" : 18,
+		"zip" : 8888
+	},
+	{
+		"screenNumber" : 5,
+		"screenCity" : "Tel Aviv",
+		"street" : "Begin",
+		"houseNumber" : 19,
+		"zip" : 9999
+	},
+	{
+		"screenNumber" : 6,
+		"screenCity" : "Rishon Lezion",
+		"street" : "Nordow",
+		"houseNumber" : 8,
+		"zip" : 1234
+	}
+]

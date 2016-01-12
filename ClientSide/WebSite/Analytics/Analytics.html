@@ -1,0 +1,26 @@
+
+
+<h4>Our Screen deployment</h4>
+    <div id="map">
+        <p style="display: none;" id="injected">{{screensForGoogleMaps}}</p>
+
+    </div>
+    <style>
+        #map {
+            border-radius: 10px;
+            height: 250px;
+            width: 588px;
+            background-color: #efefef;
+            margin-bottom: 10px;
+        }
+    </style>
+<!--<div class="fb-comments" data-href="https://www.facebook.com/InteractiveScreens/" data-width="500" data-numposts="5"></div>-->
+ <div id="fb">
+     <h4>Post us on Facebook</h4>
+     <input type="text" id="postOnFB" ng-model="postOnFBValue" name="fbp" placeholder="Write here your post!" style="background-color:white !important;max-width:570px!important; width: 570px!important; max-height:250px!important; height: 250px;       border-radius: 40px;"> <br />
+     <input type="submit" class="btn btn-primary" id="searchAdvertisment" value="Submit Search Query" ng-click="postOnFB();"/><br/>
+ </div>
+
+
+
+

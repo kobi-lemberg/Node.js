@@ -1,0 +1,66 @@
+<div>
+    </p>
+    <h2>Advertisement Page.</h2>
+    <section id="search">
+        <h5>Search</h5>
+        <form action="#" method="search" class="form">
+            <table class="table">
+                <tr>
+                    <th>
+                        <label class="col-md-2 control-label">City</label><input class="form-controll" ng-model="searchScreenCity"   name="screenCity" placeholder="City" />
+                    </th>
+                    <th>
+                        <label class="col-md-2 control-label">House</label><input class="form-controll" ng-model="searchScreenHouse"  type="number" name="screenCity" placeholder="House" />
+                    </th>
+                    <th>
+                        <label class="col-md-2 control-label">ZIP</label><input class="form-controll" ng-model="searchScreenZip"  type="number" name="screenCity" placeholder="ZIP" />
+                    </th>
+                </tr>
+                <tr><td></td><td></td><td></td></tr>
+            </table>
+        </form>
+    </section>
+    <h5>Details</h5>
+    <table class="table">
+        <tr>
+            <th>Screens</th>
+            <th>Name</th>
+            <th>Texts</th>
+            <th>Images</th>
+            <th>Template</th>
+            <th>Time Frames</th>
+            <th>Seconds</th>
+            <th>Actions:</th>
+        </tr>
+
+        <tr ng-repeat ="advertisement in advertisements | filter:searchScreenCity  | filter:searchScreenHouse | filter:searchScreenZip">
+            <!--<td>{{advertisement.screenArr}}</td>-->
+            <td>
+                <table>
+                    <tr  ng-repeat="screen in advertisement.screenArr"><td style="overflow:scroll;overflow-y:hidden; width:110px;">{{screen}}</td></tr>
+                </table>
+            </td>
+            <td>{{advertisement.name}}</td>
+            <!--<td>{{advertisement.texts}}</td>-->
+            <td>
+                <table>
+                    <tr  ng-repeat="text in advertisement.texts"><td style="overflow:scroll;overflow-y:hidden; width:300px; max-height:75px;">{{text}}</td></tr>
+                </table>
+            </td>
+            <td>{{advertisement.imgs}}</td>
+            <td>{{advertisement.templateURL}}</td>
+            <td>{{advertisement.timeFrames}}</td>
+            <td>{{advertisement.seconds}}</td>
+            <td>
+                <button class="btn btn-default" ng-click="getEdit(screen)">Edit</button>
+                <button class="btn btn-default" ng-click="deleteScreenByID(screen._id)">Delete</button>
+            </td>
+        </tr>
+        <tr>
+            <th><button class="btn btn-default" ng-click="getCreate(screen)">Create</button></th>
+            <th><button class="btn btn-default" ng-click="groupScreensByCity()">Count Screens in city</button></th>
+            <th></th><th></th><th></th><th></th>
+        </tr>
+    </table>
+    </br>
+</div>

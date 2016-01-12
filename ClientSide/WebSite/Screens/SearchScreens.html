@@ -1,0 +1,27 @@
+<div>
+    </p>
+    <h2>Search Screens Page.</h2>
+
+    <h5>Details</h5>
+    <table class="table">
+        <tr>
+            <th>Number</th>
+            <th>City</th>
+            <th>Street</th>
+            <th>House</th>
+            <th>ZIP</th>
+        </tr>
+
+        <tr ng-repeat ="screen in searchedScreens">
+            <td>{{screen.screenNumber}}</td>
+            <td>{{screen.screenCity}}</td>
+            <td>{{screen.street}}</td>
+            <td>{{screen.houseNumber}}</td>
+            <td>{{screen.zip}}</td>
+        </tr>
+        <tr>
+            <th></th><th></th><th></th><th></th><th></th>
+        </tr>
+    </table>
+    </br>
+</div>

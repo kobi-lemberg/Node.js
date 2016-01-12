@@ -1,25 +1,6 @@
 <div>
     </p>
-    <h2>Advertisement Page.</h2>
-    <section id="search">
-        <h5>Search</h5>
-        <form action="#" method="search" class="form">
-            <table class="table">
-                <tr>
-                    <th>
-                        <label class="col-md-2 control-label">Name</label><input class="form-controll" ng-model="searchAdvertismentName"   name="advertismentName" placeholder="Advertisment Name" />
-                    </th>
-                    <th>
-                        <label class="col-md-2 control-label">Text</label><input class="form-controll" ng-model="searchAdvertismentTexts"  name="advertismentTexts" placeholder="Text" />
-                    </th>
-                    <th>
-                        <label class="col-md-2 control-label">Text</label><input class="form-controll" ng-model="searchAdvertismentText2"   name="advertismentText2" placeholder="Text" />
-                    </th>
-                </tr>
-                <tr><td></td><td></td><td></td></tr>
-            </table>
-        </form>
-    </section>
+    <h2>Search Advertisement Page.</h2>
     <h5>Details</h5>
     <table class="table">
         <tr>
@@ -33,7 +14,7 @@
             <th>Seconds</th>
         </tr>
 
-        <tr ng-repeat ="advertisement in advertisements | filter:searchAdvertismentName  | filter:searchAdvertismentTexts | filter:searchAdvertismentText2">
+        <tr ng-repeat ="advertisement in searchedAdvertisement">
             <!--<td>{{advertisement.screenArr}}</td>-->
 
             <td>
@@ -59,8 +40,5 @@
 
         </tr>-->
     </table>
-    <button class="btn" ng-click="getMessageDistribution()">Messages distribution</button></th>
-    <button class="btn" ng-click="showScreenExample()">Screen example</button></th>
-    <th><button class="btn" ng-click="useSocket()">Socket</button></th>
     </br>
 </div>

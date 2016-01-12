@@ -1,89 +1,54 @@
 angular.module('angularModule').controller('AdvertisementController',function($rootScope,$scope,$http, $route, $routeParams) {
-    var groupScreensByCityFromController;
-    /*Retreive all screens from node.js server*/
+
+    /*Retreive all Advertisement from node.js server*/
     $http({
         method: 'GET',
         url: '/advertisementJSON'
     }).then(function successCallback(response) {
-        $scope.advertisement = response.data.JSON;
+        console.log("GET:advertisment - Success");
+        $scope.advertisements = response.data.JSON;
     }, function errorCallback(response) {
         console.log("error with  get screensJSON");
     });
 
-    /*Render edit page with specific screen details to update*/
-    $scope.getEdit = function(screen){
-        $rootScope.screenToEdit = screen;
-        if($rootScope.screenToEdit != undefined && $rootScope.screenToEdit != null)
-        {
-            window.location.href = "/#/Screens/editScreen";
-        }
-         else
-            console.log("Error in:/#/Screens/editScreen");
+    /*Open screen 4 in new tab*/
+    $scope.showScreenExample = function(){
+            var win = window.open("/Screen=4", '_blank');
+           win.focus();
     }
 
-    /*Send edit page params of specific screen details to server*/
-    $scope.updateScreen = function(screen){
-        console.log("Update:"+screen);
+
+    /*Send get request for updating screen 4*/
+    $scope.useSocket = function(){
         $http({
-            method: 'PUT',
-            url: '/screen',
-            data: screen
+            method: 'GET',
+            url: '/TestUpdate?id=4'
         }).then(function successCallback(response) {
-            console.log("Update:"+screen+" - Success");
+            console.log("GET:sockets - Success");
+            //$scope.advertisements = response.data.JSON;
         }, function errorCallback(response) {
-            console.log("Update:"+screen+" - ERROR");
+            console.log("error with  get sockets");
         });
     }
 
-    /*Send to server ID in order to delete from DB*/
-    $scope.deleteScreenByID = function(screenID){
-            $http({
-                method: 'DELETE',
-                url: '/deleteScreen' +"=" + screenID
-            }).then(function successCallback(response) {
-                $scope.screens = response.data.JSON;
-                console.log("Delete: Screen with _id "+screenID+" - Success");
-            }, function errorCallback(response) {
-                console.log("Delete: Screen with _id "+screenID+" - Error");
-            });
-    }
 
-    /*Group screen by their city - GroupBY query*/
-    $scope.groupScreensByCity = function(){
+    /*Count the amount of screens for each advertisement*/
+    $scope.getMessageDistribution = function(){
 
         $http({
             method: 'GET',
-            url: '/screensInCity'
+            url: '/screenCountForMsg'
         }).then(function successCallback(response) {
             console.log(response.data);
-            groupScreensByCityFromController=response.data;
-            $rootScope.groupScreensByTheirCity = response.data;
-            $rootScope.groupScreensByTheirCity.forEach(function (obj) {
+            $rootScope.sumMessageInScreens = response.data;
+            $rootScope.sumMessageInScreens.forEach(function (obj) {
                 console.log(obj._id+","+obj.count);
             })
-            window.location.href = "/#/Screens/GroupScreensByCity"
+            window.location.href = "/#/Advertisement/CountScreensForMSG"
         }, function errorCallback(response) {
             console.log("Query Group Screens by city - ERROR");
-            window.location.href = "/#/Screens";
+            window.location.href = "/#/Advertisement";
         });
     }
 
-    /*Render create page*/
-    $scope.getCreate = function(){
-        window.location.href = "/#/Screens/createScreen";
-    }
-    /*Send create page params of new screen details to server*/
-    $scope.createScreen = function(screenToCreate){
-        $http({
-            method: 'POST',
-            url: '/createNewScreen',
-            data: screenToCreate
-        }).then(function successCallback(response) {
-
-            console.log("Create:"+screenToCreate+" - Success");
-            window.location.href = "/#/Screens";
-        }, function errorCallback(response) {
-            console.log("Create:"+screenToCreate+" - ERROR");
-        });
-    }
 });

@@ -1,6 +1,6 @@
 <h2>Screens Page.</h2>
 
-<form>
+<form ng-submit="updateScreen(screenToEdit)">
     <div class="form-horizontal">
         <h2>Edit Screen</h2>
         <hr />
@@ -33,7 +33,7 @@
             <label class="control-label col-md-2" for="screenNumber">Screen Number</label>
             <div class="col-md-10">
                 <input class="text-box single-line valid" id="screenNumber" name="screenNumber"  ng-model="screenToEdit.screenNumber" type="number" value="{{screenToEdit.screenNumber}}">
-                <input type="submit" class="btn btn-default" ng-click="updateScreen(screenToEdit)"  value="Update"/>
+                <input type="submit" class="btn btn-default" value="Update"/>
             </div>
         </div>
 
